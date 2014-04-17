@@ -1,30 +1,32 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <title>Circus HTML5</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1, IE=9">
+	<meta charset="UTF-8" />
+	<title>Game Title</title>
+	
+	<!-- build:css main.min.css -->
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<!-- /build -->
 
-  <!-- build:css main.min.css -->
-  <link rel="stylesheet" href="css/main.css">
-  <!-- /build -->
+	<!-- build:js main.min.js -->
+	<script type="text/javascript" src="js/lib/phaser.min.js"></script>
+	<script type="text/javascript" src="js/load.js"></script>
+	<script type="text/javascript" src="js/menu.js"></script>
+	<script type="text/javascript" src="js/play.js"></script>
+	<script type="text/javascript" src="js/game.js"></script>
+	<!-- /build -->
 </head>
 <body>
-  <div id="game"></div>
-  
-  <!-- build:remove -->
-  <script src="http://localhost:35729/livereload.js"></script>  
-  <!-- /build -->
 
-  <!-- build:js main.min.js -->
-  <script src="js/lib/phaser.js"></script>
-  <script src="js/states/Boot.js"></script>
-  <script src="js/states/Preloader.js"></script>
-  <script src="js/states/MainMenu.js"></script>
-  <script src="js/states/Prestage.js"></script>
-  <script src="js/states/Stage01.js"></script>
-  <script src="js/states/Stage02.js"></script>
-  <script src="js/main.js"></script>
-  <!-- /build -->
+
+<h2>Game Title</h2>
+
+<div id="game"></div>
+
+<br />
+<div align="center">
+	<p>Music - link to music</p>
+	Source code available at [github link]
+</div>
 </body>
 </html>
