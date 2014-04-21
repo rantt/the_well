@@ -1,5 +1,5 @@
 {
-  "globalstrict": true,
+  "globalstrict": false,
   "bitwise": true,
   "laxcomma": true,
   "camelcase": true,
