@@ -6,13 +6,13 @@ module.exports = (grunt) ->
     SRC_DIR: 'src'
     DST_DIR: 'dist'
     DST_FILE:  '<%= DST_DIR %>/main'
-    INDEX_FILE: 'index.html'
+    INDEX_FILE: 'index.html.db5'
 
     # For the moment grab latest phaser build
     # from GH, later on phaser might have Bower support
     'curl-dir':
       '<%= SRC_DIR %>/js/lib/': [
-        'https://raw.github.com/photonstorm/phaser/master/build/phaser.min.js'
+        'https://raw.github.com/photonstorm/phaser/master/build/phaser.min.js',
       ]
 
 
@@ -22,13 +22,29 @@ module.exports = (grunt) ->
       dist: ['<%= DST_DIR %>']
 
     copy:
-      assets:
+      atlas:
         files: [
           expand: true
           flatten: false
-          cwd: '<%= SRC_DIR %>/assets/'
+          cwd: '<%= SRC_DIR %>/assets/atlas/'
           src: ['**']
-          dest: '<%= DST_DIR %>/assets/'
+          dest: '<%= DST_DIR %>/assets/atlas/'
+        ]
+      font:
+        files: [
+          expand: true
+          flatten: false
+          cwd: '<%= SRC_DIR %>/assets/fonts/'
+          src: ['**']
+          dest: '<%= DST_DIR %>/assets/fonts/'
+        ]
+      audio:
+        files: [
+          expand: true
+          flatten: false
+          cwd: '<%= SRC_DIR %>/assets/audio/'
+          src: ['**']
+          dest: '<%= DST_DIR %>/assets/audio/'
         ]
       index:
         files: [
@@ -53,35 +69,65 @@ module.exports = (grunt) ->
         files:
           '<%= DST_FILE %>.min.js': ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/play.js','<%= SRC_DIR %>/js/game.js']
 
-
-
       options:
         banner: '/*! <%= PKG.name %> v<%= PKG.version %> */\n'
+
+    # jsonmin:
+    #   stripAll:
+    #     options:
+    #       stripWhitespace: true
+    #       stripComments: true
+
+    #     files:
+    #       '<%= DST_DIR %>/levels/level1.json':  '<%= SRC_DIR %>/levels/level1.json'
+    #       '<%= DST_DIR %>/levels/level2.json':  '<%= SRC_DIR %>/levels/level2.json'
+    #       '<%= DST_DIR %>/levels/level3.json':  '<%= SRC_DIR %>/levels/level3.json'
+
+
+    imagemin:
+      png:
+        options:
+          optimizationLevel: 7
+    
+        files: [
+          
+          # Set to true to enable the following options…
+          expand: true
+          
+          # cwd is 'current working directory'
+          cwd: "<%= SRC_DIR %>/assets/images/"
+          src: ["**/*.png"]
+          
+          # Could also match cwd line above. i.e. project-directory/img/
+          dest: "<%= DST_DIR %>/assets/images/"
+          ext: ".png"
+        ]
+
 
     cssmin:
       dist:
         files:
           '<%= DST_FILE %>.min.css': ['<%= SRC_DIR %>/css/**/*.css']
 
-    htmlmin:
-      options:
-        removeComments: true
-        removeCommentsFromCDATA: true
-        removeCDATASectionsFromCDATA: true
-        collapseWhitespace: true
-        collapseBooleanAttributes: true
-        removeAttributeQuotes: true
-        removeRedundantAttributes: true
-        useShortDoctype: true
-
-      index:
-        files:
-          '<%= DST_DIR %>/<%= INDEX_FILE %>': '<%= DST_DIR %>/<%= INDEX_FILE %>'
+    # htmlmin:
+    #   options:
+    #     removeComments: true
+    #     removeCommentsFromCDATA: true
+    #     removeCDATASectionsFromCDATA: true
+    #     collapseWhitespace: true
+    #     collapseBooleanAttributes: true
+    #     removeAttributeQuotes: true
+    #     removeRedundantAttributes: true
+    #     useShortDoctype: true
+    #
+    #   index:
+    #     files:
+    #       '<%= DST_DIR %>/index.html': '<%= DST_DIR %>/<%= INDEX_FILE %>'
 
     processhtml:
       index:
         files:
-          '<%= DST_DIR %>/<%= INDEX_FILE %>': '<%= SRC_DIR %>/<%=INDEX_FILE %>'
+          '<%= DST_DIR %>/index.html': '<%= SRC_DIR %>/<%=INDEX_FILE %>'
 
     connect:
       dev:
@@ -114,14 +160,18 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-connect'
   @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-contrib-uglify'
+  # @loadNpmTasks 'grunt-jsonmin'
+  @loadNpmTasks 'grunt-contrib-imagemin'
   @loadNpmTasks 'grunt-contrib-cssmin'
   @loadNpmTasks 'grunt-contrib-htmlmin'
   @loadNpmTasks 'grunt-contrib-watch'
   @loadNpmTasks 'grunt-curl'
   @loadNpmTasks 'grunt-processhtml'
 
+
+  # 'htmlmin' and 'jsonmin' are also available options
   @registerTask 'dist', ['clean', 'jshint', 'uglify',
-                         'cssmin', 'copy', 'processhtml', 'htmlmin']
+                         'imagemin', 'cssmin', 'copy', 'processhtml']
   @registerTask 'server',  ['jshint', 'connect', 'watch']
   @registerTask 'update', ['curl-dir']
   @registerTask 'default', ['server']
