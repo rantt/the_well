@@ -23,3 +23,4 @@ grunt
 3) Enjoy!
 
 
+_Originally named phaser-boiler-template, renamed because I hate typing :)_
