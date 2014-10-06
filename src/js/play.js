@@ -12,51 +12,70 @@
 
 // var musicOn = true;
 
-
-var wKey;
-var aKey;
-var sKey;
-var dKey;
-
 Game.Play = function(game) {
   this.game = game;
 };
 
 Game.Play.prototype = {
   create: function() {
-    this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    // // Music
+    this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
+    this.map = this.game.add.tilemap('town');
+    this.map.addTilesetImage('RPG');
+    this.layer1 = this.map.createLayer('layer1');
+    this.layer1.resizeWorld();
+    this.layer2 = this.map.createLayer('layer2');
+    this.layer2.resizeWorld();
+
+    player.create();
+    this.camera = {x:0,y:0};
+    // Music
     // this.music = this.game.add.sound('music');
     // this.music.volume = 0.5;
     // this.music.play('',0,1,true);
 
-    //Setup WASD and extra keys
-    wKey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
-    aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-    sKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-    dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
 
   },
 
   update: function() {
+    player.movements();
+    
+    if (this.tween) {
+      return;
+    }
 
-    // // Toggle Music
-    // muteKey.onDown.add(this.toggleMute, this);
+    this.tween = true;
+    var speed = 600;
+    var to_move = false;
 
+    if (player.sprite.y > this.game.camera.y + Game.h) {
+      this.camera.y += 1;
+      to_move = true;
+    }
+    else if (player.sprite.y < this.game.camera.y) {
+      this.camera.y -= 1;
+      to_move = true;
+    }
+    else if (player.sprite.x > this.game.camera.x + Game.w) {
+      this.camera.x += 1;
+      to_move = true;
+    }
+    else if (player.sprite.x < this.game.camera.x) {
+      this.camera.x -= 1;
+      to_move = true;
+    }
+
+    if (to_move) {
+      var t = this.game.add.tween(this.game.camera).to({x:this.camera.x*Game.w, y:this.camera.y*Game.h}, speed);
+      t.start();
+      t.onComplete.add(function(){this.tween = false;}, this);
+    }
+    else {
+      this.tween = false;
+    }
+    
   },
-  // toggleMute: function() {
-  //   if (musicOn == true) {
-  //     musicOn = false;
-  //     this.music.volume = 0;
-  //   }else {
-  //     musicOn = true;
-  //     this.music.volume = 0.5;
-  //   }
-  // },
-  // render: function() {
-  //   game.debug.text('Health: ' + tri.health, 32, 96);
-  // }
 
 };
