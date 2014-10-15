@@ -22,7 +22,8 @@ Game.Play.prototype = {
 
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
     this.map = this.game.add.tilemap('town');
-    this.map.addTilesetImage('RPG');
+    this.map.addTilesetImage('RPGTown');
+    // this.map.addTilesetImage('RPG House');
     this.layer1 = this.map.createLayer('layer1');
     this.layer1.resizeWorld();
     this.layer2 = this.map.createLayer('layer2');
@@ -31,9 +32,9 @@ Game.Play.prototype = {
     player.create();
     this.camera = {x:0,y:0};
     // Music
-    // this.music = this.game.add.sound('music');
-    // this.music.volume = 0.5;
-    // this.music.play('',0,1,true);
+    this.music = this.game.add.sound('music');
+    this.music.volume = 0.5;
+    this.music.play('',0,1,true);
 
     // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
 

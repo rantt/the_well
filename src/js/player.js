@@ -14,7 +14,8 @@ Player = function(game) {
 Player.prototype = {
   preload: function() {
     // this.game.load.spritesheet('player','assets/images/hero.png',32,32,12);
-    this.game.load.spritesheet('player','assets/images/hero.png',32,32,12);
+    // this.game.load.spritesheet('player','assets/images/hero.png',32,32,12);
+    this.game.load.spritesheet('player','assets/images/hero.png',64,64,12);
   },
   create: function() {
     this.cursor = this.game.input.keyboard.createCursorKeys();

@@ -1,7 +1,7 @@
-// var tileSize = 16;
-var tileSize = 32;
-var dRows = 14;
-var dCols = 16;
+var tileSize = 64;
+var dRows = 12;
+var dCols = 14;
+
 var player;
 
 var Game = {
@@ -43,13 +43,13 @@ Game.Load.prototype = {
   	this.game.load.setPreloadSprite(preloading);
 
     this.game.load.tilemap('town','assets/maps/town.json',null,Phaser.Tilemap.TILED_JSON);
-    this.game.load.image('RPG','assets/images/RPG.png',32,32);
+    this.game.load.image('RPGTown','assets/images/RPGTown_x64.png',64,64);
 
     player = new Player(this.game);
     player.preload(); 
 
     // Music Track
-    // this.game.load.audio('music','soundtrack.mp3');
+    this.game.load.audio('music','assets/audio/a_theme.mp3');
 
   },
   create: function() {
