@@ -23,11 +23,33 @@ Game.Play.prototype = {
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
     this.map = this.game.add.tilemap('town');
     this.map.addTilesetImage('RPGTown');
-    // this.map.addTilesetImage('RPG House');
     this.layer1 = this.map.createLayer('layer1');
     this.layer1.resizeWorld();
     this.layer2 = this.map.createLayer('layer2');
     this.layer2.resizeWorld();
+
+
+    // Gray Brick
+    this.map.setCollision([13,14,15]);
+
+    // Trees
+    this.map.setCollision([16,17,18],true,'layer2');
+    
+    // this.map.setCollision(21);
+    this.map.setCollision(22);
+    this.map.setCollision(23);
+    // this.map.setCollision(24);
+    
+
+    // TODO: Roof tiles should overlap sprite
+    // Roof 
+    // this.map.setCollision(25);
+    // this.map.setCollision(26);
+    // this.map.setCollision(27);
+
+    // this.map.setCollision(28);
+    
+
 
     player.create();
     this.camera = {x:0,y:0};
@@ -41,6 +63,9 @@ Game.Play.prototype = {
   },
 
   update: function() {
+    this.game.physics.arcade.collide(player.sprite, this.layer1);
+    this.game.physics.arcade.collide(player.sprite, this.layer2);
+
     player.movements();
     
     if (this.tween) {
