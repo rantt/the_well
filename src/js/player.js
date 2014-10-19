@@ -1,4 +1,5 @@
 /*global Game*/
+/*global tileSize*/
 
 var wKey;
 var aKey;
@@ -6,10 +7,12 @@ var sKey;
 var dKey;
 
 Player = function(game) {
-  this.game = game
+  this.game = game;
   this.sprite = null;
   this.alive = true;
   this.camera = {x:0,y:0};
+  this.tilex = 0;
+  this.tiley = 0;
 };
 
 Player.prototype = {
@@ -25,7 +28,11 @@ Player.prototype = {
     sKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
 
-    this.sprite = this.game.add.sprite(256,256,'player');
+    // this.sprite = this.game.add.sprite(256,256,'player');
+    this.sprite = this.game.add.sprite(this.tilex*tileSize-tileSize/2,this.tiley*tileSize+tileSize/2,'player');
+    
+    console.log('x = '+this.tilex*tileSize);
+    console.log('y = '+this.tiley*tileSize);
     this.sprite.anchor.setTo(0.5,0.5);
     this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
     // this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
@@ -40,7 +47,6 @@ Player.prototype = {
     this.movements();
     this.updateCamera();
   },
-
   updateCamera: function() {
     if (this.tweening) {
       return;

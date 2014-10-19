@@ -49,7 +49,11 @@ Game.Play.prototype = {
     // this.map.setCollision(27);
 
     // this.map.setCollision(28);
-    
+
+    // Initial Player Position by tile
+    player.tilex = 12;
+    player.tiley = 7;
+
     player.create();
     // Music
     this.music = this.game.add.sound('music');
