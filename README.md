@@ -4,7 +4,7 @@ This game is a work-in-progress for the onegameamonth.com (#1GAM) challenge.  Th
 
 Developed using [Phaser.js](http://phaser.io)
 
-Music - None so far
+Music - [A Theme](http://opengameart.org/content/a-theme) by edwinnington
 SFX - None so far
 
 Sprites

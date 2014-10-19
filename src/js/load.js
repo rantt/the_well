@@ -1,3 +1,5 @@
+/*global Player*/
+
 var tileSize = 64;
 var dRows = 12;
 var dCols = 14;
@@ -37,7 +39,7 @@ Game.Load.prototype = {
     this.game.add.plugin(Phaser.Plugin.Debug);
 
     //Loading Screen Message/bar
-    var loadingText = this.game.add.bitmapText(Game.w, Game.h, 'minecraftia', 'Loading...', 21);
+    // var loadingText = this.game.add.bitmapText(Game.w, Game.h, 'minecraftia', 'Loading...', 21);
 
   	var preloading = this.game.add.sprite(Game.w/2-64, Game.h/2+50, 'loading');
   	this.game.load.setPreloadSprite(preloading);

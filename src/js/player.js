@@ -9,6 +9,7 @@ Player = function(game) {
   this.game = game
   this.sprite = null;
   this.alive = true;
+  this.camera = {x:0,y:0};
 };
 
 Player.prototype = {
@@ -35,69 +36,96 @@ Player.prototype = {
     this.sprite.animations.add('right', [4, 11], 6, true);
     this.sprite.animations.add('left', [5, 10], 6, true);
   },
+  update: function() {
+    this.movements();
+    this.updateCamera();
+  },
+
+  updateCamera: function() {
+    if (this.tweening) {
+      return;
+    }
+    this.tweening = true;
+    
+    var speed = 700;
+    var toMove = false;
+
+    if (player.sprite.y > this.game.camera.y + Game.h) {
+      this.camera.y += 1;
+      toMove = true;
+    }
+    else if (player.sprite.y < this.game.camera.y) {
+      this.camera.y -= 1;
+      toMove = true;
+    }
+    else if (player.sprite.x > this.game.camera.x + Game.w) {
+      this.camera.x += 1;
+      toMove = true;
+    }
+    else if (player.sprite.x < this.game.camera.x) {
+      this.camera.x -= 1;
+      toMove = true;
+    }
+
+    if (toMove) {
+      var t = this.game.add.tween(this.game.camera).to({x:this.camera.x*Game.w, y:this.camera.y*Game.h}, speed);
+      t.start();
+      t.onComplete.add(function(){this.tweening = false;}, this);
+    }
+    else {
+      this.tweening = false;
+    }
+ 
+  },
   movements:  function() {
     this.sprite.body.velocity.x = 0;
     this.sprite.body.velocity.y = 0;
 
-    if (!this.sprite.alive)
+    if (!this.sprite.alive){
       return;
+    }
 
-    var speed = 230;
+    var speed = 275;
 
-    if (this.cursor.left.isDown || aKey.isDown) {
-      if (this.tween) {
-        this.sprite.body.velocity.x = -50;
-      }
-      else {
+    if (this.tweening) {
+      this.sprite.body.velocity.x = 0;
+      this.sprite.body.velocity.y = 0;
+    }else{
+      if (this.cursor.left.isDown || aKey.isDown) {
         this.sprite.body.velocity.x = -speed;
+        this.sprite.direction = 'left';
+        this.sprite.animations.play('left');
       }
-      this.sprite.direction = 'left';
-      this.sprite.animations.play('left');
-    }
-    else if (this.cursor.right.isDown || dKey.isDown) {
-      if (this.tween) {
-        this.sprite.body.velocity.x = 50;
-      }
-      else {
+      else if (this.cursor.right.isDown || dKey.isDown) {
         this.sprite.body.velocity.x = speed;
+        this.sprite.direction = 'right';
+        this.sprite.animations.play('right');
       }
-      this.sprite.direction = 'right';
-      this.sprite.animations.play('right');
-    }
-    else if (this.cursor.up.isDown || wKey.isDown) {
-      if (this.tween) {
-        this.sprite.body.velocity.y = -50;
-      }
-      else {
+      else if (this.cursor.up.isDown || wKey.isDown) {
         this.sprite.body.velocity.y = -speed;
+        this.sprite.direction = 'up';
+        this.sprite.animations.play('up');
       }
-      this.sprite.direction = 'up';
-      this.sprite.animations.play('up');
-    }
-    else if (this.cursor.down.isDown || sKey.isDown) {
-      if (this.tween) {
-        this.sprite.body.velocity.y = 50;
+      else if (this.cursor.down.isDown || sKey.isDown) {
+        this.sprite.body.velocity.y = speed;
+        this.sprite.direction = 'down';
+        this.sprite.animations.play('down');
       }
       else {
-        this.sprite.body.velocity.y = speed;
+        if (this.sprite.direction === 'up') {
+          this.sprite.frame = 1;
+        }
+        else if (this.sprite.direction === 'down') {
+          this.sprite.frame = 0;
+        }
+        else if (this.sprite.direction === 'right') {
+          this.sprite.frame = 2;
+        }
+        else if (this.sprite.direction === 'left') {
+          this.sprite.frame = 3;
+        }
+        this.sprite.animations.stop();
       }
-      this.sprite.direction = 'down';
-      this.sprite.animations.play('down');
-    }
-    else {
-      if (this.sprite.direction === 'up') {
-        this.sprite.frame = 1;
-      }
-      else if (this.sprite.direction === 'down') {
-        this.sprite.frame = 0;
-      }
-      else if (this.sprite.direction === 'right') {
-        this.sprite.frame = 2;
-      }
-      else if (this.sprite.direction === 'left') {
-        this.sprite.frame = 3;
-      }
-      this.sprite.animations.stop();
     } 
   }
 }
