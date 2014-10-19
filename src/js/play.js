@@ -49,6 +49,9 @@ Game.Play.prototype = {
     // this.map.setCollision(27);
 
     // this.map.setCollision(28);
+     
+    // Signs
+    this.map.setCollision(33,true,'layer2');
 
     // Initial Player Position by tile
     player.tilex = 12;
