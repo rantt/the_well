@@ -63,9 +63,9 @@ Game.Play.prototype = {
 
     player.create();
     // Music
-    // this.music = this.game.add.sound('music');
-    // this.music.volume = 0.5;
-    // this.music.play('',0,1,true);
+    this.music = this.game.add.sound('music');
+    this.music.volume = 0.5;
+    this.music.play('',0,1,true);
 
     // dialoguePanel = this.game.add.sprite(0,0,'RPGTextbox'); 
     dialoguePanel = this.game.add.sprite(0,8*64,'RPGTextbox'); 
