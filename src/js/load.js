@@ -46,6 +46,7 @@ Game.Load.prototype = {
 
     this.game.load.tilemap('town','assets/maps/town.json',null,Phaser.Tilemap.TILED_JSON);
     this.game.load.image('RPGTown','assets/images/RPGTown_x64.png',tileSize,tileSize);
+    this.game.load.image('RPGTextbox','assets/images/RPGTextbox_x64.png',tileSize,tileSize);
 
     player = new Player(this.game);
     player.preload(); 

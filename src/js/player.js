@@ -10,7 +10,6 @@ Player = function(game) {
   this.game = game;
   this.sprite = null;
   this.alive = true;
-  this.camera = {x:0,y:0};
   this.tilex = 0;
   this.tiley = 0;
 };
@@ -28,14 +27,10 @@ Player.prototype = {
     sKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
 
-    // this.sprite = this.game.add.sprite(256,256,'player');
     this.sprite = this.game.add.sprite(this.tilex*tileSize-tileSize/2,this.tiley*tileSize+tileSize/2,'player');
     
-    console.log('x = '+this.tilex*tileSize);
-    console.log('y = '+this.tiley*tileSize);
     this.sprite.anchor.setTo(0.5,0.5);
     this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    // this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
 
     this.sprite.direction = 'down';
     this.sprite.animations.add('down', [6, 7], 6, true);
@@ -45,43 +40,6 @@ Player.prototype = {
   },
   update: function() {
     this.movements();
-    this.updateCamera();
-  },
-  updateCamera: function() {
-    if (this.tweening) {
-      return;
-    }
-    this.tweening = true;
-    
-    var speed = 700;
-    var toMove = false;
-
-    if (player.sprite.y > this.game.camera.y + Game.h) {
-      this.camera.y += 1;
-      toMove = true;
-    }
-    else if (player.sprite.y < this.game.camera.y) {
-      this.camera.y -= 1;
-      toMove = true;
-    }
-    else if (player.sprite.x > this.game.camera.x + Game.w) {
-      this.camera.x += 1;
-      toMove = true;
-    }
-    else if (player.sprite.x < this.game.camera.x) {
-      this.camera.x -= 1;
-      toMove = true;
-    }
-
-    if (toMove) {
-      var t = this.game.add.tween(this.game.camera).to({x:this.camera.x*Game.w, y:this.camera.y*Game.h}, speed);
-      t.start();
-      t.onComplete.add(function(){this.tweening = false;}, this);
-    }
-    else {
-      this.tweening = false;
-    }
- 
   },
   movements:  function() {
     this.sprite.body.velocity.x = 0;
