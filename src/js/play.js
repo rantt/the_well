@@ -23,7 +23,6 @@ Game.Play.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    this.camera = {x:0,y:0};
   
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
     this.map = this.game.add.tilemap('town');
@@ -48,9 +47,9 @@ Game.Play.prototype = {
 
     // TODO: Roof tiles should overlap sprite
     // Roof 
-    // this.map.setCollision(25);
-    // this.map.setCollision(26);
-    // this.map.setCollision(27);
+    this.map.setCollision(25);
+    this.map.setCollision(26);
+    this.map.setCollision(27);
 
     // this.map.setCollision(28);
      
@@ -67,19 +66,30 @@ Game.Play.prototype = {
     this.music.volume = 0.5;
     this.music.play('',0,1,true);
 
-    // dialoguePanel = this.game.add.sprite(0,0,'RPGTextbox'); 
-    dialoguePanel = this.game.add.sprite(0,8*64,'RPGTextbox'); 
-    dialoguePanel.hidden = false;
-    // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
+    dialogue.create();
 
+    // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
+
+
   update: function() {
     this.game.physics.arcade.collide(player.sprite, this.layer1);
     this.game.physics.arcade.collide(player.sprite, this.layer2);
+    
+    if (spaceKey.isDown && dialogue.hidden) {
+        content = [
+          " ",
+          "Hello? ",
+          "Hello!?! ",
+          "Is anybody there?"
+        ];
+        dialogue.show(content);
+    }else if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
+      dialogue.hide();
+    }
 
-    spaceKey.onDown.add(this.dialoguePanel, this);
 
     this.updateCamera();
     player.update();
@@ -95,51 +105,29 @@ Game.Play.prototype = {
     var toMove = false;
 
     if (player.sprite.y > this.game.camera.y + Game.h) {
-      this.camera.y += 1;
+      Game.camera.y += 1;
       toMove = true;
     }
     else if (player.sprite.y < this.game.camera.y) {
-      this.camera.y -= 1;
+      Game.camera.y -= 1;
       toMove = true;
     }
     else if (player.sprite.x > this.game.camera.x + Game.w) {
-      this.camera.x += 1;
+      Game.camera.x += 1;
       toMove = true;
     }
     else if (player.sprite.x < this.game.camera.x) {
-      this.camera.x -= 1;
+      Game.camera.x -= 1;
       toMove = true;
     }
 
     if (toMove) {
-      var t = this.game.add.tween(this.game.camera).to({x:this.camera.x*Game.w, y:this.camera.y*Game.h}, speed);
+      var t = this.game.add.tween(this.game.camera).to({x:Game.camera.x*Game.w, y:Game.camera.y*Game.h}, speed);
       t.start();
       t.onComplete.add(function(){this.tweening = false;}, this);
     }
     else {
       this.tweening = false;
     }
-  },
-  dialoguePanel: function() {
-    if (dialoguePanel.hidden === true) {
-      // Position Hidden Panel before tween
-      dialoguePanel.x = this.camera.x*Game.w;
-      dialoguePanel.y = this.camera.y*Game.h+12*64;
-      dialoguePanel.alpha = 100;
-      
-      var t = this.game.add.tween(dialoguePanel).to({x: this.camera.x*Game.w, y: this.camera.y*Game.h+8*64}, 250);
-      t.start();
-      t.onComplete.add(function(){dialoguePanel.hidden = false;}, this);
-
-    }else {
-      var t = this.game.add.tween(dialoguePanel).to({x: this.camera.x*Game.w, y: this.camera.y*Game.h+12*64}, 250);
-      t.start();
-      t.onComplete.add(function(){
-        dialoguePanel.alpha = 0;
-        dialoguePanel.hidden = true;
-      }, this);
-    }
   }
-   
-
 };

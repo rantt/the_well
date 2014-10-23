@@ -1,4 +1,5 @@
 /*global Player*/
+/*global Dialogue*/
 
 var tileSize = 64;
 var dRows = 12;
@@ -8,7 +9,8 @@ var player;
 
 var Game = {
   w: tileSize*dCols,
-  h: tileSize*dRows 
+  h: tileSize*dRows,
+  camera: {x:0,y:0} 
 };
 
 Game.Boot = function(game) {
@@ -47,6 +49,9 @@ Game.Load.prototype = {
     this.game.load.tilemap('town','assets/maps/town.json',null,Phaser.Tilemap.TILED_JSON);
     this.game.load.image('RPGTown','assets/images/RPGTown_x64.png',tileSize,tileSize);
     this.game.load.image('RPGTextbox','assets/images/RPGTextbox_x64.png',tileSize,tileSize);
+
+    dialogue = new Dialogue(this.game);
+    dialogue.preload();
 
     player = new Player(this.game);
     player.preload(); 
