@@ -50,6 +50,8 @@ Game.Load.prototype = {
     this.game.load.image('RPGTown','assets/images/RPGTown_x64.png',tileSize,tileSize);
     this.game.load.image('RPGTextbox','assets/images/RPGTextbox_x64.png',tileSize,tileSize);
 
+    this.game.load.spritesheet('npcs', 'assets/images/npcs.png',64,64,16);
+  
     dialogue = new Dialogue(this.game);
     dialogue.preload();
 
