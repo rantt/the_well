@@ -21,6 +21,7 @@ Dialogue.prototype = {
   create: function() {
     console.log('created');
     this.sprite = this.game.add.sprite(0,12*64,'RPGTextbox'); 
+    this.sprite.alpha = 0;
     console.log(this.sprite);
     this.text = this.game.add.bitmapText(30, 8*64+30, 'minecraftia', '', 30)
   },
