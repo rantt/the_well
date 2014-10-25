@@ -21,6 +21,59 @@
          "width":28,
          "x":0,
          "y":0
+        }, 
+        {
+         "height":24,
+         "name":"objects",
+         "objects":[
+                {
+                 "gid":57,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":777,
+                 "y":470
+                }, 
+                {
+                 "gid":57,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":634,
+                 "y":536
+                }, 
+                {
+                 "gid":52,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "script":"*Oh, hi son*How are you today?"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":192,
+                 "y":320
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":28,
+         "x":0,
+         "y":0
         }],
  "orientation":"orthogonal",
  "properties":
@@ -36,6 +89,21 @@
          "imagewidth":384,
          "margin":0,
          "name":"RPGTown",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":64,
+         "tilewidth":64
+        }, 
+        {
+         "firstgid":37,
+         "image":"..\/images\/npcs.png",
+         "imageheight":320,
+         "imagewidth":320,
+         "margin":0,
+         "name":"npcs",
          "properties":
             {
 

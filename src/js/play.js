@@ -1,5 +1,6 @@
 /*global Game*/
 /*global player*/
+/*global Npc*/
 
 /**
  * Returns a random integer between min and max
@@ -22,15 +23,22 @@ Game.Play = function(game) {
 Game.Play.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    // this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
 
+    this.npcs = this.game.add.group();
+    this.npcs.enableBody = true;
+    this.npcs.immovable = true;
   
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
     this.map = this.game.add.tilemap('town');
     this.map.addTilesetImage('RPGTown');
+    this.map.addTilesetImage('npcs');
     this.layer1 = this.map.createLayer('layer1');
     this.layer1.resizeWorld();
     this.layer2 = this.map.createLayer('layer2');
     this.layer2.resizeWorld();
+
+
 
 
     // Gray Brick
@@ -50,11 +58,23 @@ Game.Play.prototype = {
     this.map.setCollision(25);
     this.map.setCollision(26);
     this.map.setCollision(27);
+    this.map.setCollision(52);
 
     // this.map.setCollision(28);
      
     // Signs
     this.map.setCollision(33,true,'layer2');
+
+
+    // Load Objects
+    this.map.createFromObjects('objects', 52, 'npcs', 16, true, false, this.npcs)
+    
+    this.npcs.forEach(function(npc) {
+      npc = new Npc(game,'mom',npc.x,npc.y,16, npc.script);
+        
+    }, this);  
+
+
 
     // Initial Player Position by tile
     player.tilex = 6;
@@ -62,69 +82,69 @@ Game.Play.prototype = {
 
     player.create();
     // Music
-    this.music = this.game.add.sound('music');
-    this.music.volume = 0.5;
-    this.music.play('',0,1,true);
+    // this.music = this.game.add.sound('music');
+    // this.music.volume = 0.5;
+    // this.music.play('',0,1,true);
 
     dialogue.create();
 
     // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    console.log(spaceKey);
 
   },
 
+  conversation: function(player,npc) {
+    if (spaceKey.isDown && dialogue.hidden) {
+        console.log(npc.script);
+        dialogue.show(npc.script.split('*'));
+    }
+  },
 
   update: function() {
     this.game.physics.arcade.collide(player.sprite, this.layer1);
     this.game.physics.arcade.collide(player.sprite, this.layer2);
     
-    if (spaceKey.isDown && dialogue.hidden) {
-        content = [
-          " ",
-          "Hello? ",
-          "Hello!?! ",
-          "Is anybody there?"
-        ];
-        dialogue.show(content);
-    }else if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
+    this.game.physics.arcade.overlap(player.sprite, this.npcs, this.conversation, null, this);
+
+    if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
       dialogue.hide();
     }
 
-
-    this.updateCamera();
+    this.updatecamera();
     player.update();
    
   },
-  updateCamera: function() {
+  updatecamera: function() {
     if (this.tweening) {
       return;
     }
     this.tweening = true;
     
     var speed = 700;
-    var toMove = false;
+    var tomove = false;
 
-    if (player.sprite.y > this.game.camera.y + Game.h) {
-      Game.camera.y += 1;
-      toMove = true;
+    if (player.sprite.y > this.game.camera.y + game.h) {
+      game.camera.y += 1;
+      tomove = true;
     }
     else if (player.sprite.y < this.game.camera.y) {
-      Game.camera.y -= 1;
-      toMove = true;
+      game.camera.y -= 1;
+      tomove = true;
     }
-    else if (player.sprite.x > this.game.camera.x + Game.w) {
-      Game.camera.x += 1;
-      toMove = true;
+    else if (player.sprite.x > this.game.camera.x + game.w) {
+      game.camera.x += 1;
+      tomove = true;
     }
     else if (player.sprite.x < this.game.camera.x) {
-      Game.camera.x -= 1;
-      toMove = true;
+      game.camera.x -= 1;
+      tomove = true;
     }
 
-    if (toMove) {
-      var t = this.game.add.tween(this.game.camera).to({x:Game.camera.x*Game.w, y:Game.camera.y*Game.h}, speed);
+    if (tomove) {
+      var t = this.game.add.tween(this.game.camera).to({x:game.camera.x*game.w, y:game.camera.y*game.h}, speed);
       t.start();
-      t.onComplete.add(function(){this.tweening = false;}, this);
+      t.oncomplete.add(function(){this.tweening = false;}, this);
     }
     else {
       this.tweening = false;
