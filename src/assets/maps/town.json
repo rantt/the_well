@@ -27,34 +27,6 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":57,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":777,
-                 "y":470
-                }, 
-                {
-                 "gid":57,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":634,
-                 "y":536
-                }, 
-                {
                  "gid":52,
                  "height":0,
                  "name":"",
@@ -66,6 +38,20 @@
                  "visible":true,
                  "width":0,
                  "x":192,
+                 "y":320
+                }, 
+                {
+                 "gid":52,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "script":"*So*This is the park.*Pretty empty, I know"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1472,
                  "y":320
                 }],
          "opacity":1,

@@ -22,23 +22,20 @@ Game.Play = function(game) {
 
 Game.Play.prototype = {
   create: function() {
-    this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    // this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
+    this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
 
-    this.npcs = this.game.add.group();
-    this.npcs.enableBody = true;
-    this.npcs.immovable = true;
-  
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
     this.map = this.game.add.tilemap('town');
     this.map.addTilesetImage('RPGTown');
-    this.map.addTilesetImage('npcs');
     this.layer1 = this.map.createLayer('layer1');
     this.layer1.resizeWorld();
     this.layer2 = this.map.createLayer('layer2');
     this.layer2.resizeWorld();
 
 
+    //Debug
+    // this.layer1.debug = true;
+    // this.layer2.debug = true;
 
 
     // Gray Brick
@@ -47,7 +44,7 @@ Game.Play.prototype = {
     // Trees
     this.map.setCollision([16,17,18],true,'layer2');
     
-    // this.map.setCollision(21);
+    this.map.setCollision(21);
     this.map.setCollision(22);
     this.map.setCollision(23);
     // this.map.setCollision(24);
@@ -66,14 +63,18 @@ Game.Play.prototype = {
     this.map.setCollision(33,true,'layer2');
 
 
-    // Load Objects
-    this.map.createFromObjects('objects', 52, 'npcs', 16, true, false, this.npcs)
+    // Load NPCs 
+    this.npcs = this.game.add.group();
+    this.map.createFromObjects('objects', 52, 'npcs', 15, true, false, this.npcs)
     
     this.npcs.forEach(function(npc) {
-      npc = new Npc(game,'mom',npc.x,npc.y,16, npc.script);
-        
+      this.game.physics.p2.enable(npc);
+      npc.body.kinematic = true; //immovable
+
     }, this);  
 
+    this.physics.p2.convertTilemap(this.map, this.layer1);
+    this.physics.p2.convertTilemap(this.map, this.layer2);
 
 
     // Initial Player Position by tile
@@ -90,22 +91,42 @@ Game.Play.prototype = {
 
     // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-    console.log(spaceKey);
 
   },
 
-  conversation: function(player,npc) {
+  conversation: function(npc) {
     if (spaceKey.isDown && dialogue.hidden) {
-        console.log(npc.script);
         dialogue.show(npc.script.split('*'));
     }
   },
 
   update: function() {
-    this.game.physics.arcade.collide(player.sprite, this.layer1);
-    this.game.physics.arcade.collide(player.sprite, this.layer2);
-    
-    this.game.physics.arcade.overlap(player.sprite, this.npcs, this.conversation, null, this);
+
+    if (spaceKey.isDown && dialogue.hidden) {
+      this.npcs.forEach(function(npc) {
+        // console.log(npc.x);
+         // if (this.game.physics.arcade.distanceBetween(npc,player.sprite) < 200) {
+         // console.log('x'+ npc.x + 'y' + npc.y);
+         console.log('dist'+parseInt(Math.abs(player.sprite.x - npc.x)+Math.abs(player.sprite.y - npc.y)));
+         console.log('distx'+ lineDistance(player.sprite,npc));
+         // if (parseInt(Math.abs(player.sprite.x - npc.x)+Math.abs(player.sprite.y - npc.y)) < 100) {
+         if (lineDistance(player.sprite, npc) < 100){
+          console.log(npc.script);
+          dialogue.show(npc.script.split('*'));
+        }
+      },this);
+
+    }
+    function lineDistance(point1, point2) {
+      var x = 0;
+      var y = 0;
+      x = Math.abs(point1.x - point2.x);
+      x *= x;
+      y = Math.abs(point1.y - point2.y); 
+      y *= y;
+      return Math.sqrt(x+y);
+    }      
+
 
     if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
       dialogue.hide();
@@ -122,32 +143,36 @@ Game.Play.prototype = {
     this.tweening = true;
     
     var speed = 700;
-    var tomove = false;
+    var toMove = false;
 
-    if (player.sprite.y > this.game.camera.y + game.h) {
-      game.camera.y += 1;
-      tomove = true;
+    if (player.sprite.y > this.game.camera.y + Game.h) {
+      Game.camera.y += 1;
+      toMove = true;
     }
     else if (player.sprite.y < this.game.camera.y) {
-      game.camera.y -= 1;
-      tomove = true;
+      Game.camera.y -= 1;
+      toMove = true;
     }
-    else if (player.sprite.x > this.game.camera.x + game.w) {
-      game.camera.x += 1;
-      tomove = true;
+    else if (player.sprite.x > this.game.camera.x + Game.w) {
+      Game.camera.x += 1;
+      toMove = true;
     }
     else if (player.sprite.x < this.game.camera.x) {
-      game.camera.x -= 1;
-      tomove = true;
+      Game.camera.x -= 1;
+      toMove = true;
     }
 
-    if (tomove) {
-      var t = this.game.add.tween(this.game.camera).to({x:game.camera.x*game.w, y:game.camera.y*game.h}, speed);
+    if (toMove) {
+      var t = this.game.add.tween(this.game.camera).to({x:Game.camera.x*Game.w, y:Game.camera.y*Game.h}, speed);
       t.start();
-      t.oncomplete.add(function(){this.tweening = false;}, this);
+      t.onComplete.add(function(){this.tweening = false;}, this);
     }
     else {
       this.tweening = false;
     }
+  },
+  render: function() {
+    // player.sprite.body.debug = true;
   }
+
 };

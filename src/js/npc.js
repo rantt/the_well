@@ -12,10 +12,9 @@ Npc = function(game, character, x, y, script) {
     this.LEFT = 18; 
   }
 
-  this.sprite = this.game.add.sprite(x, y, 'npcs',this.FRONT);
-  this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-  this.sprite.enableBody = true;
-  this.sprite.immovable = true;    
+  // this.sprite = this.game.add.sprite(x, y, 'npcs',15);
+  // this.game.physics.p2.enable(this.sprite);
+  // this.sprite.body.kinematic = true; //immovable
     
   this.facing = 'down';
 };

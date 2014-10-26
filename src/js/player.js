@@ -30,13 +30,20 @@ Player.prototype = {
     this.sprite = this.game.add.sprite(this.tilex*tileSize-tileSize/2,this.tiley*tileSize+tileSize/2,'player');
     
     this.sprite.anchor.setTo(0.5,0.5);
-    this.game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.game.physics.p2.enable(this.sprite); // set up player physics
+    this.sprite.body.fixedRotation = true; // no rotation
+
+    //Create a rectangular hitbox around players body
+    this.sprite.body.clearShapes();
+    this.sprite.body.addRectangle(16,32,0,16);
 
     this.sprite.direction = 'down';
     this.sprite.animations.add('down', [6, 7], 6, true);
     this.sprite.animations.add('up', [8, 9], 6, true);
     this.sprite.animations.add('right', [4, 11], 6, true);
     this.sprite.animations.add('left', [5, 10], 6, true);
+
+
   },
   update: function() {
     this.movements();
@@ -91,6 +98,6 @@ Player.prototype = {
         this.sprite.animations.stop();
       }
     } 
-  }
-}
+  },
+};
 
