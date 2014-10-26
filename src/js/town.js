@@ -16,11 +16,11 @@
 
 var spaceKey;
 
-Game.Play = function(game) {
+Game.Town = function(game) {
   this.game = game;
 };
 
-Game.Play.prototype = {
+Game.Town.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
 
