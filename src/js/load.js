@@ -2,8 +2,8 @@
 /*global Dialogue*/
 
 var tileSize = 64;
-var dRows = 12;
-var dCols = 14;
+var dRows = 10;
+var dCols = 12;
 
 var player;
 
@@ -47,10 +47,11 @@ Game.Load.prototype = {
   	this.game.load.setPreloadSprite(preloading);
 
     this.game.load.tilemap('town','assets/maps/town.json',null,Phaser.Tilemap.TILED_JSON);
-    this.game.load.image('RPGTown','assets/images/RPGTown_x64.png',tileSize,tileSize);
-    this.game.load.image('RPGTextbox','assets/images/RPGTextbox_x64.png',tileSize,tileSize);
-    // this.game.load.image('npcs', 'assets/images/npcs.png',tileSize,tileSize);
-    this.game.load.spritesheet('npcs', 'assets/images/npcs.png',64,64,20);
+    this.game.load.image('town','assets/images/town.png',tileSize,tileSize);
+    // this.game.load.image('RPGTextbox','assets/images/RPGTextbox_x64.png',tileSize,tileSize);
+    this.game.load.image('textbox','assets/images/textbox.png',tileSize,tileSize);
+    // this.game.load.spritesheet('npcs', 'assets/images/npcs.png',64,64,20);
+    this.game.load.spritesheet('mom','assets/images/npc_mom.png',64,64,12);
   
     dialogue = new Dialogue(this.game);
     dialogue.preload();

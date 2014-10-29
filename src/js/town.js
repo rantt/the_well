@@ -2,16 +2,6 @@
 /*global player*/
 /*global Npc*/
 
-/**
- * Returns a random integer between min and max
- * Using Math.round() will give you a non-uniform distribution!
- */
-
-// // Choose Random integer in a range
-// function rand (min, max) {
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-// }
-
 // var musicOn = true;
 
 var spaceKey;
@@ -26,7 +16,7 @@ Game.Town.prototype = {
 
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
     this.map = this.game.add.tilemap('town');
-    this.map.addTilesetImage('RPGTown');
+    this.map.addTilesetImage('town');
     this.layer1 = this.map.createLayer('layer1');
     this.layer1.resizeWorld();
     this.layer2 = this.map.createLayer('layer2');
@@ -34,8 +24,8 @@ Game.Town.prototype = {
 
 
     //Debug
-    // this.layer1.debug = true;
-    // this.layer2.debug = true;
+    this.layer1.debug = true;
+    this.layer2.debug = true;
 
 
     // Gray Brick
@@ -47,7 +37,7 @@ Game.Town.prototype = {
     this.map.setCollision(21);
     this.map.setCollision(22);
     this.map.setCollision(23);
-    // this.map.setCollision(24);
+    this.map.setCollision(24);
     
 
     // TODO: Roof tiles should overlap sprite
@@ -55,6 +45,7 @@ Game.Town.prototype = {
     this.map.setCollision(25);
     this.map.setCollision(26);
     this.map.setCollision(27);
+    this.map.setCollision(32);
     this.map.setCollision(52);
 
     // this.map.setCollision(28);
@@ -65,13 +56,20 @@ Game.Town.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 52, 'npcs', 15, true, false, this.npcs)
+    this.map.createFromObjects('objects', 37, 'mom', 15, true, false, this.npcs);
+
+    this.exitPoints = this.game.add.group();
+    this.map.createFromObjects('objects', 28, 'town', 27, true, false, this.exitPoints);
     
     this.npcs.forEach(function(npc) {
       this.game.physics.p2.enable(npc);
       npc.body.kinematic = true; //immovable
 
-    }, this);  
+    }, this);
+
+    // this.exitPoints.forEach(function(ep) {
+    //   console.log(ep.destination);
+    // }, this);  
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
@@ -104,14 +102,7 @@ Game.Town.prototype = {
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
-        // console.log(npc.x);
-         // if (this.game.physics.arcade.distanceBetween(npc,player.sprite) < 200) {
-         // console.log('x'+ npc.x + 'y' + npc.y);
-         console.log('dist'+parseInt(Math.abs(player.sprite.x - npc.x)+Math.abs(player.sprite.y - npc.y)));
-         console.log('distx'+ lineDistance(player.sprite,npc));
-         // if (parseInt(Math.abs(player.sprite.x - npc.x)+Math.abs(player.sprite.y - npc.y)) < 100) {
-         if (lineDistance(player.sprite, npc) < 100){
-          console.log(npc.script);
+         if (lineDistance(player.sprite, npc) < 64){
           dialogue.show(npc.script.split('*'));
         }
       },this);

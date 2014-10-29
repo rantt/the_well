@@ -15,15 +15,15 @@ Dialogue = function(game) {
 Dialogue.prototype = {
 
   preload: function() {
-    this.game.load.image('RPGTextbox','assets/images/RPGTextbox_x64.png',tileSize,tileSize);
+    this.game.load.image('textbox','assets/images/textbox.png',tileSize,tileSize);
   },
 
   create: function() {
     console.log('created');
-    this.sprite = this.game.add.sprite(0,12*64,'RPGTextbox'); 
+    this.sprite = this.game.add.sprite(0,11*64,'textbox'); 
     this.sprite.alpha = 0;
     console.log(this.sprite);
-    this.text = this.game.add.bitmapText(30, 8*64+30, 'minecraftia', '', 30)
+    this.text = this.game.add.bitmapText(30, 7*64+30, 'minecraftia', '', 30)
   },
 
   show: function(content) {
@@ -36,17 +36,16 @@ Dialogue.prototype = {
 
     /* Position sprite below the current screen and make it visible */
     this.sprite.x = Game.camera.x*Game.w;
-    this.sprite.y = Game.camera.y*Game.h+12*64;
+    this.sprite.y = Game.camera.y*Game.h+11*64;
 
     this.text.x = Game.camera.x*Game.w+30;
-    this.text.y = Game.camera.y*Game.h+8*64+30;
+    this.text.y = Game.camera.y*Game.h+7*64+30;
  
     this.sprite.alpha = 100;
 
 
-
     /* Slide Up the Dialogue Panel */
-    var t = this.game.add.tween(this.sprite).to({x: Game.camera.x*Game.w, y: Game.camera.y*Game.h+8*64}, 250);
+    var t = this.game.add.tween(this.sprite).to({x: Game.camera.x*Game.w, y: Game.camera.y*Game.h+7*64}, 250);
     t.start();
     t.onComplete.add(function() {
       this.nextLine();
@@ -64,7 +63,7 @@ Dialogue.prototype = {
     this.index = 0;
 
     /* Slide Down the Dialogue Panel and make it invisible */
-    var t = this.game.add.tween(this.sprite).to({x: Game.camera.x*Game.w, y: Game.camera.y*Game.h+12*64}, 250);
+    var t = this.game.add.tween(this.sprite).to({x: Game.camera.x*Game.w, y: Game.camera.y*Game.h+11*64}, 250);
     t.start();
     t.onComplete.add(function(){
       this.hidden = true
