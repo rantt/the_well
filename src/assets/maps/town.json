@@ -27,32 +27,46 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":37,
+                 "gid":52,
                  "height":0,
                  "name":"",
                  "properties":
                     {
-                     "script":"*Good morning son*How are you?"
+                     "script":"*You wanna play?*Did you ask your mom first?"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":512,
-                 "y":384
+                 "x":576,
+                 "y":512
                 }, 
                 {
-                 "gid":28,
+                 "gid":29,
                  "height":0,
                  "name":"",
                  "properties":
                     {
-                     "destination":"house"
+                     "destination":"myhouse"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
                  "x":256,
-                 "y":384
+                 "y":320
+                }, 
+                {
+                 "gid":29,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "destination":"gramps_house"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1216,
+                 "y":1024
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -90,6 +104,21 @@
          "imagewidth":192,
          "margin":0,
          "name":"mom",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":64,
+         "tilewidth":64
+        }, 
+        {
+         "firstgid":49,
+         "image":"..\/images\/npc_jack.png",
+         "imageheight":320,
+         "imagewidth":320,
+         "margin":0,
+         "name":"jack",
          "properties":
             {
 

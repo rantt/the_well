@@ -24,8 +24,8 @@ Game.Town.prototype = {
 
 
     //Debug
-    this.layer1.debug = true;
-    this.layer2.debug = true;
+    // this.layer1.debug = true;
+    // this.layer2.debug = true;
 
 
     // Gray Brick
@@ -56,23 +56,20 @@ Game.Town.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 37, 'mom', 15, true, false, this.npcs);
+    this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs);
+    this.map.createFromObjects('objects', 52, 'jack', 3, true, false, this.npcs);
+
+    // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
+
 
     this.exitPoints = this.game.add.group();
-    this.map.createFromObjects('objects', 28, 'town', 27, true, false, this.exitPoints);
+    this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);
     
     this.npcs.forEach(function(npc) {
       this.game.physics.p2.enable(npc);
       npc.body.kinematic = true; //immovable
 
     }, this);
-
-    // this.exitPoints.forEach(function(ep) {
-    //   console.log(ep.destination);
-    // }, this);  
-
-    this.physics.p2.convertTilemap(this.map, this.layer1);
-    this.physics.p2.convertTilemap(this.map, this.layer2);
 
 
     // Initial Player Position by tile
@@ -99,6 +96,14 @@ Game.Town.prototype = {
   },
 
   update: function() {
+
+    this.exitPoints.forEach(function(ep) {
+      b1 = ep.getBounds();
+      bp = player.sprite.getBounds();
+      if (Phaser.Rectangle.intersects(b1,bp)) {
+        console.log('you are in a door going to ' + ep.destination);
+      }
+    }, this);
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
