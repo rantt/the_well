@@ -6,18 +6,23 @@
 
 var spaceKey;
 
-Game.Town = function(game) {
+Game.MyHouse = function(game) {
   this.game = game;
 };
 
-Game.Town.prototype = {
+Game.MyHouse.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
-    Game.camera = {x:0, y:0}
+
+
+    Game.camera = {x:0, y:1};
+    this.game.camera.x = Game.camera.x*Game.w; 
+    this.game.camera.y = Game.camera.y*Game.h;
 
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
-    this.map = this.game.add.tilemap('town');
-    this.map.addTilesetImage('town');
+    this.map = this.game.add.tilemap('myhouse');
+    this.map.addTilesetImage('house');
+    this.map.addTilesetImage('furniture');
     this.layer1 = this.map.createLayer('layer1');
     this.layer1.resizeWorld();
     this.layer2 = this.map.createLayer('layer2');
@@ -30,56 +35,57 @@ Game.Town.prototype = {
 
 
     // Gray Brick
-    this.map.setCollision([13,14,15]);
+    // this.map.setCollision([13,14,15]);
 
     // Trees
-    this.map.setCollision([16,17,18],true,'layer2');
+    // this.map.setCollision([16,17,18],true,'layer2');
     
-    this.map.setCollision(21);
-    this.map.setCollision(22);
-    this.map.setCollision(23);
-    this.map.setCollision(24);
-    
+    // this.map.setCollision(21);
+    // this.map.setCollision(22);
+    // this.map.setCollision(23);
+    // this.map.setCollision(24);
+    //
 
     // TODO: Roof tiles should overlap sprite
     // Roof 
-    this.map.setCollision(25);
-    this.map.setCollision(26);
-    this.map.setCollision(27);
-    this.map.setCollision(32);
-    this.map.setCollision(52);
+    // this.map.setCollision(25);
+    // this.map.setCollision(26);
+    // this.map.setCollision(27);
+    // this.map.setCollision(32);
+    // this.map.setCollision(52);
 
     // this.map.setCollision(28);
      
     // Signs
-    this.map.setCollision(33,true,'layer2');
+    // this.map.setCollision(33,true,'layer2');
 
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs);
-    this.map.createFromObjects('objects', 52, 'jack', 3, true, false, this.npcs);
+    // this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs);
+    // this.map.createFromObjects('objects', 52, 'jack', 3, true, false, this.npcs);
 
     // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
 
-    this.exitPoints = this.game.add.group();
-    this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);
-    
-    this.npcs.forEach(function(npc) {
-      this.game.physics.p2.enable(npc);
-      npc.body.kinematic = true; //immovable
 
-    }, this);
+    this.exitPoints = this.game.add.group();
+    this.map.createFromObjects('objects', 4, 'house',3, true, false, this.exitPoints);
+    //
+    // this.npcs.forEach(function(npc) {
+    //   this.game.physics.p2.enable(npc);
+    //   npc.body.kinematic = true; //immovable
+    //
+    // }, this);
 
 
     // Initial Player Position by tile
-    player.tilex = 6;
-    player.tiley = 6;
-
+    player.tilex = 8;
+    player.tiley = 17;
     player.create();
-
+    // player.reposition();
+    
     // Music
     // this.music = this.game.add.sound('music');
     // this.music.volume = 0.5;
@@ -92,6 +98,12 @@ Game.Town.prototype = {
 
   },
 
+  conversation: function(npc) {
+    if (spaceKey.isDown && dialogue.hidden) {
+        dialogue.show(npc.script.split('*'));
+    }
+  },
+
   update: function() {
 
     this.exitPoints.forEach(function(ep) {
@@ -102,15 +114,15 @@ Game.Town.prototype = {
         this.game.state.start(ep.destination);
       }
     }, this);
-
-    if (spaceKey.isDown && dialogue.hidden) {
-      this.npcs.forEach(function(npc) {
-         if (lineDistance(player.sprite, npc) < 64){
-          dialogue.show(npc.script.split('*'));
-        }
-      },this);
-
-    }
+    //
+    // if (spaceKey.isDown && dialogue.hidden) {
+    //   this.npcs.forEach(function(npc) {
+    //      if (lineDistance(player.sprite, npc) < 64){
+    //       dialogue.show(npc.script.split('*'));
+    //     }
+    //   },this);
+    //
+    // }
     function lineDistance(point1, point2) {
       var x = 0;
       var y = 0;

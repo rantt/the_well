@@ -7,6 +7,8 @@ game.state.add('Boot', Game.Boot);
 game.state.add('Load', Game.Load);
 game.state.add('Menu', Game.Menu);
 game.state.add('Town', Game.Town);
-game.state.add('World', Game.World);
+game.state.add('MyHouse', Game.MyHouse);
+game.state.add('Well', Game.Well);
+// game.state.add('World', Game.World);
 
 game.state.start('Boot');

@@ -20,7 +20,8 @@ Game.Menu.prototype =  {
     update: function() {
       //Click to Start
       if (this.game.input.activePointer.isDown){
-        this.game.state.start('Town');
+        // this.game.state.start('Town');
+        this.game.state.start('Well');
       }
     }
 };
