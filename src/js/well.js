@@ -44,6 +44,8 @@ Game.Well.prototype = {
     this.layer = this.map.createLayer(0);
     // this.layer.debug = true;
     this.map.setCollision(0);
+    this.map.setCollision(1);
+    this.map.setCollision(2);
     this.layer.resizeWorld();
 
     this.physics.p2.convertTilemap(this.map, this.layer);

@@ -23,7 +23,7 @@ var dCols = 50;
 for (var i = 0; i < dRows; i++) {
   map[i] = [];
   for (var j = 0; j < dCols; j++) {
-    map[i][j] = 1;
+    map[i][j] = 0;
   }
 }
 
@@ -243,12 +243,49 @@ Dungeon.prototype = {
     var line;
     result = ""; 
 
-
-
+    // var leftTile = 0;
+    // var rightTile = 0;
+    var aboveTile = 0;
+    var belowTile = 0;
     for (var i = 0; i < dRows; i++) {
       line = [];
       for (var j = 0; j < dCols; j++) {
-        line[j] = map[i][j];
+        if (map[i][j] === 0) {
+
+          // leftTile = map[i][j-1] || 0;
+          // rightTile = map[i][j+1] || 0;
+          
+          aboveTile = (i > 0) ?  map[i-1][j] : 0;
+          belowTile = map[i+1][j] || 0;
+
+          if (belowTile === 3) {
+            //if above a tile put a wall
+            line[j] = 2;
+          }else if (aboveTile === 3) {
+            //if below a tile but a wall unless the tile below you is a wall
+            if (i > 2) {
+              if (map[i+2][j] === 3) {
+                line[j] = 1;
+              }else {
+                line[j] = 2;
+              }
+            }
+          }
+          else {
+            line[j] = 0;
+          } 
+
+          // if (map[i+1][j] === 3){
+          //   line[j] = 2;
+          // }
+          // else {
+          //   line[j] = 0;
+          // } 
+
+          
+        }else{
+          line[j] = map[i][j];
+        }
       }
       result += line.join(',') + "\n";
     }
