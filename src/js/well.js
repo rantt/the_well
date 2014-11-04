@@ -2,6 +2,7 @@
 /* global Dungeon */
 /* global player */
 /* global tileSize */
+
 var wKey;
 var aKey;
 var sKey;
@@ -13,19 +14,17 @@ Game.Well = function(game) {
 
 Game.Well.prototype = {
   preload: function() {
-    // this.game.load.image('tiles', 'assets/images/dungeon2_sheet.png');
     this.game.load.image('tiles', 'assets/images/well.png');
     this.game.load.spritesheet('player','assets/images/hero_x64.png',64,64,12);
   },
   create: function() {
-    this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
     this.game.world.setBounds(0, 0, Game.w, Game.h);
-    // dungeon = new Dungeon(game, dCols, dRows);
+    this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
     
     //Twice the Size
     dCols = 42;
     dRows = 30;
-
+    
     //4 Times Scale
     // dCols = 56;
     // dRows = 40;
@@ -43,17 +42,13 @@ Game.Well.prototype = {
     this.map.addTilesetImage('tiles');
     this.layer = this.map.createLayer(0);
     // this.layer.debug = true;
+
     this.map.setCollision(0);
     this.map.setCollision(1);
     this.map.setCollision(2);
     this.layer.resizeWorld();
-
     this.physics.p2.convertTilemap(this.map, this.layer);
 
-    // player.create();
-    // player.sprite.x = starting_room.center.x;
-    // player.sprite.y = starting_room.center.y;
-    // console.log(player.sprite.x, player.sprite.y);
     this.layer.debug = true;
 
     //Setup WASD and extra keys
@@ -63,14 +58,13 @@ Game.Well.prototype = {
     dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.cursor = this.game.input.keyboard.createCursorKeys();
 
-    // this.sprite = this.game.add.sprite(this.tilex*tileSize-tileSize/2,this.tiley*tileSize+tileSize/2,'player');
-    
     this.sprite = this.game.add.sprite(starting_room.center.x*64, starting_room.center.y*64, 'player');
     this.sprite.anchor.setTo(0.5,0.5);
     this.game.physics.p2.enable(this.sprite); // set up player physics
     this.sprite.body.fixedRotation = true; // no rotation
-    // this.game.camera.follow(this.sprite);
+    this.sprite.body.collideWorldBounds = true;
     this.game.camera.follow(this.sprite, Phaser.Camera.FOLLOW_PLATFORMER);
+    this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
 
     //Create a rectangular hitbox around players body
     this.sprite.body.clearShapes();
@@ -84,16 +78,14 @@ Game.Well.prototype = {
 
   },
   update: function() {
-    // console.log(player.sprite.x);
-    // player.update();
     this.sprite.body.velocity.x = 0;
     this.sprite.body.velocity.y = 0;
+    var speed = 275;
 
     if (!this.sprite.alive){
       return;
     }
 
-    var speed = 275;
 
     if (this.tweening) {
       this.sprite.body.velocity.x = 0;
@@ -139,5 +131,7 @@ Game.Well.prototype = {
   },
   render: function() {
     this.game.debug.text('worldx: '+ this.game.world.x+' worldy: '+this.game.world.y, 64, 64);
+    this.sprite.body.debug = true;
+    this.game.debug.text('Player pos x: ' + this.sprite.body.x + ' y: ' + this.sprite.body.y, 32, 96);
   },    
 };
