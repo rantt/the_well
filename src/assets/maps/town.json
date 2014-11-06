@@ -123,6 +123,20 @@
                  "width":0,
                  "x":256,
                  "y":896
+                }, 
+                {
+                 "gid":37,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "script":"*You're playing with Jack again?*Well, ok* Be safe, don't come home too late."
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":512,
+                 "y":192
                 }],
          "opacity":1,
          "type":"objectgroup",
