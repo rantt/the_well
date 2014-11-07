@@ -129,8 +129,8 @@ Game.Town.prototype = {
     player.update();
    
   },
-  render: function() {
+  // render: function() {
     // player.sprite.body.debug = true;
-  }
+  // }
 
 };

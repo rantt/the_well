@@ -40,11 +40,24 @@ Game.MyHouse.prototype = {
     // Trees
     // this.map.setCollision([16,17,18],true,'layer2');
     
-    // this.map.setCollision(21);
-    // this.map.setCollision(22);
-    // this.map.setCollision(23);
-    // this.map.setCollision(24);
-    //
+    this.map.setCollision(2); //empty space
+    this.map.setCollision(8); //blue wall upper
+    this.map.setCollision(9); //blue wall lower
+    this.map.setCollision(31); //window
+
+    this.map.setCollision(36,true,'layer2'); //chair right
+    this.map.setCollision(37,true,'layer2'); //chair left
+
+    this.map.setCollision(38,true,'layer2'); //chair left
+    this.map.setCollision(39,true,'layer2'); //chair left
+    this.map.setCollision(40,true,'layer2'); //chair left
+    this.map.setCollision(41,true,'layer2'); //chair left
+    this.map.setCollision(42,true,'layer2'); //chair left
+    this.map.setCollision(43,true,'layer2'); //chair left
+
+
+    this.map.setCollision(27,true,'layer2'); //slim dresser
+    this.map.setCollision(32,true,'layer2'); //wide dresser
 
     // TODO: Roof tiles should overlap sprite
     // Roof 
