@@ -1,27 +1,44 @@
 /*global Game*/
 
+var Npc = function(game,x,y,name,startFrame) {
+  Phaser.Sprite.call(this, game, x+32, y-32 , name, startFrame);
+  this.game.physics.p2.enable(this);
+  this.body.kinematic = true; //immovable
 
-Npc = function(game, character, x, y, script) {
-  this.game = game;
-  this.character = character;
-  this.script = script;
-  if (this.character === 'mom') {
-    this.FRONT = 15;
-    this.BACK = 16;
-    this.RIGHT = 17;
-    this.LEFT = 18; 
-  }
+  //Set Frames for facing
+  this.LEFT = 9;
+  this.RIGHT = 6;
+  this.UP = 3;
+  this.DOWN = 0;
 
-  // this.sprite = this.game.add.sprite(x, y, 'npcs',15);
-  // this.game.physics.p2.enable(this.sprite);
-  // this.sprite.body.kinematic = true; //immovable
-    
-  this.facing = 'down';
 };
 
-Npc.prototype = {
-  create: function() {
+Npc.prototype = Object.create(Phaser.Sprite.prototype);
+Npc.prototype.interact = function() {
+         if (lineDistance(player.sprite, this) < 64){
+           yDiff = this.y - player.sprite.y;
+           xDiff = this.x - player.sprite.x;
 
-  }
+           //Face the player
+           if (Math.abs(xDiff) > Math.abs(yDiff)) {
+             if (xDiff > 0) {
+               this.frame = this.LEFT;
+             }else {
+               this.frame = this.RIGHT;
+             }
+           }else {
+             if (yDiff > 0) {
+               this.frame = this.UP;
+             }else {
+               this.frame = this.DOWN;
+             }
+
+           }
+
+
+          dialogue.show(this.script.split('*'));
+        }
+
 };
+Npc.prototype.constructor = Npc;
 

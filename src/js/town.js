@@ -64,11 +64,13 @@ Game.Town.prototype = {
     // Signs
     this.map.setCollision(33,true,'layer2');
 
+    console.log('objects=',this.map.objects);
+
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs);
-    this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs);
+    this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs, Npc);
+    this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs, Npc);
 
     // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
     this.physics.p2.convertTilemap(this.map, this.layer1);
@@ -76,18 +78,6 @@ Game.Town.prototype = {
 
     this.exitPoints = this.game.add.group();
     this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);
-    
-    this.npcs.forEach(function(npc) {
-      this.game.physics.p2.enable(npc);
-      npc.body.kinematic = true; //immovable
-
-      npc.LEFT = 9;
-      npc.RIGHT = 6;
-      npc.UP = 3;
-      npc.DOWN = 0;
-
-
-    }, this);
 
 
     // Initial Player Position by tile
@@ -121,30 +111,7 @@ Game.Town.prototype = {
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
-          
-         if (lineDistance(player.sprite, npc) < 64){
-           yDiff = npc.y - player.sprite.y;
-           xDiff = npc.x - player.sprite.x;
-
-           //Face the player
-           if (Math.abs(xDiff) > Math.abs(yDiff)) {
-             if (xDiff > 0) {
-               npc.frame = npc.LEFT;
-             }else {
-               npc.frame = npc.RIGHT;
-             }
-           }else {
-             if (yDiff > 0) {
-               npc.frame = npc.UP;
-             }else {
-               npc.frame = npc.DOWN;
-             }
-
-           }
-
-
-          dialogue.show(npc.script.split('*'));
-        }
+        npc.interact();
       },this);
 
     }
@@ -162,3 +129,4 @@ Game.Town.prototype = {
   // }
 
 };
+

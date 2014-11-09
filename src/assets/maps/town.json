@@ -116,7 +116,10 @@
                  "name":"",
                  "properties":
                     {
-                     "script":"*You're playing with Jack again?*Well, ok* Be safe, don't come home too late."
+                     "facing":"0",
+                     "name":"mom",
+                     "script":"*You're playing with Jack again?*Well, ok* Be safe, don't come home too late.",
+                     "type":"npc"
                     },
                  "type":"",
                  "visible":true,
@@ -130,7 +133,10 @@
                  "name":"",
                  "properties":
                     {
-                     "script":"*You wanna play?*Did you ask your mom first?"
+                     "facing":"9",
+                     "name":"jack",
+                     "script":"*You wanna play?*Did you ask your mom first?",
+                     "type":"npc"
                     },
                  "type":"",
                  "visible":true,
