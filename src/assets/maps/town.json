@@ -133,10 +133,8 @@
                  "name":"",
                  "properties":
                     {
-                     "facing":"9",
                      "name":"jack",
-                     "script":"*You wanna play?*Did you ask your mom first?",
-                     "type":"npc"
+                     "script":"*You wanna play?*Did you ask your mom first?"
                     },
                  "type":"",
                  "visible":true,
