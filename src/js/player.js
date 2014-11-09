@@ -46,7 +46,12 @@ Player.prototype = {
 
   },
   update: function() {
-    this.movements();
+
+    if (!dialogue.typing) {
+      this.sprite.body.velocity.x = 0;
+      this.sprite.body.velocity.y = 0;
+      this.movements();
+    }
     this.updatecamera();
   },
   updatecamera: function() {
