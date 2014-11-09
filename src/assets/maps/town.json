@@ -27,20 +27,6 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":52,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "script":"*You wanna play?*Did you ask your mom first?"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":576,
-                 "y":512
-                }, 
-                {
                  "gid":29,
                  "height":0,
                  "name":"",
@@ -137,6 +123,20 @@
                  "width":0,
                  "x":512,
                  "y":192
+                }, 
+                {
+                 "gid":58,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "script":"*You wanna play?*Did you ask your mom first?"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":576,
+                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -186,7 +186,7 @@
          "firstgid":49,
          "image":"..\/images\/npc_jack.png",
          "imageheight":320,
-         "imagewidth":320,
+         "imagewidth":192,
          "margin":0,
          "name":"jack",
          "properties":

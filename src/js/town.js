@@ -3,6 +3,16 @@
 /*global Npc*/
 
 // var musicOn = true;
+function lineDistance(point1, point2) {
+  var x = 0;
+  var y = 0;
+  x = Math.abs(point1.x - point2.x);
+  x *= x;
+  y = Math.abs(point1.y - point2.y); 
+  y *= y;
+  return Math.sqrt(x+y);
+}      
+
 
 var spaceKey;
 
@@ -58,7 +68,7 @@ Game.Town.prototype = {
     // Load NPCs 
     this.npcs = this.game.add.group();
     this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs);
-    this.map.createFromObjects('objects', 52, 'jack', 3, true, false, this.npcs);
+    this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs);
 
     // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
     this.physics.p2.convertTilemap(this.map, this.layer1);
@@ -70,6 +80,12 @@ Game.Town.prototype = {
     this.npcs.forEach(function(npc) {
       this.game.physics.p2.enable(npc);
       npc.body.kinematic = true; //immovable
+
+      npc.LEFT = 9;
+      npc.RIGHT = 6;
+      npc.UP = 3;
+      npc.DOWN = 0;
+
 
     }, this);
 
@@ -105,21 +121,33 @@ Game.Town.prototype = {
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
+          
          if (lineDistance(player.sprite, npc) < 64){
+           yDiff = npc.y - player.sprite.y;
+           xDiff = npc.x - player.sprite.x;
+
+           //Face the player
+           if (Math.abs(xDiff) > Math.abs(yDiff)) {
+             if (xDiff > 0) {
+               npc.frame = npc.LEFT;
+             }else {
+               npc.frame = npc.RIGHT;
+             }
+           }else {
+             if (yDiff > 0) {
+               npc.frame = npc.UP;
+             }else {
+               npc.frame = npc.DOWN;
+             }
+
+           }
+
+
           dialogue.show(npc.script.split('*'));
         }
       },this);
 
     }
-    function lineDistance(point1, point2) {
-      var x = 0;
-      var y = 0;
-      x = Math.abs(point1.x - point2.x);
-      x *= x;
-      y = Math.abs(point1.y - point2.y); 
-      y *= y;
-      return Math.sqrt(x+y);
-    }      
 
 
     if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
