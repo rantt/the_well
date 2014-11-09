@@ -3,15 +3,7 @@
 /*global Npc*/
 
 // var musicOn = true;
-function lineDistance(point1, point2) {
-  var x = 0;
-  var y = 0;
-  x = Math.abs(point1.x - point2.x);
-  x *= x;
-  y = Math.abs(point1.y - point2.y); 
-  y *= y;
-  return Math.sqrt(x+y);
-}      
+      
 
 
 var spaceKey;
@@ -59,6 +51,7 @@ Game.Town.prototype = {
     this.map.setCollision(32);
     this.map.setCollision(52);
 
+
     // this.map.setCollision(28);
      
     // Signs
@@ -69,7 +62,7 @@ Game.Town.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs, Npc);
+    this.map.createFromObjects('objects', 37, 'mom', 0, true, false, this.npcs, Npc);
     this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs, Npc);
 
     // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");

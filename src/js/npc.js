@@ -1,5 +1,15 @@
 /*global Game*/
 
+function lineDistance(point1, point2) {
+  var x = 0;
+  var y = 0;
+  x = Math.abs(point1.x - point2.x);
+  x *= x;
+  y = Math.abs(point1.y - point2.y); 
+  y *= y;
+  return Math.sqrt(x+y);
+}
+
 var Npc = function(game,x,y,name,startFrame) {
   Phaser.Sprite.call(this, game, x+32, y-32 , name, startFrame);
   this.game.physics.p2.enable(this);

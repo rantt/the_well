@@ -75,23 +75,14 @@ Game.MyHouse.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    // this.map.createFromObjects('objects', 37, 'mom', 1, true, false, this.npcs);
-    // this.map.createFromObjects('objects', 52, 'jack', 3, true, false, this.npcs);
+    this.map.createFromObjects('objects', 54, 'dad', 3, true, false, this.npcs, Npc);
 
-    // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
 
 
     this.exitPoints = this.game.add.group();
     this.map.createFromObjects('objects', 4, 'house',3, true, false, this.exitPoints);
-    //
-    // this.npcs.forEach(function(npc) {
-    //   this.game.physics.p2.enable(npc);
-    //   npc.body.kinematic = true; //immovable
-    //
-    // }, this);
-
 
     // Initial Player Position by tile
     player.tilex = 8;
@@ -111,12 +102,6 @@ Game.MyHouse.prototype = {
 
   },
 
-  conversation: function(npc) {
-    if (spaceKey.isDown && dialogue.hidden) {
-        dialogue.show(npc.script.split('*'));
-    }
-  },
-
   update: function() {
 
     this.exitPoints.forEach(function(ep) {
@@ -127,24 +112,13 @@ Game.MyHouse.prototype = {
         this.game.state.start(ep.destination);
       }
     }, this);
-    //
-    // if (spaceKey.isDown && dialogue.hidden) {
-    //   this.npcs.forEach(function(npc) {
-    //      if (lineDistance(player.sprite, npc) < 64){
-    //       dialogue.show(npc.script.split('*'));
-    //     }
-    //   },this);
-    //
-    // }
-    function lineDistance(point1, point2) {
-      var x = 0;
-      var y = 0;
-      x = Math.abs(point1.x - point2.x);
-      x *= x;
-      y = Math.abs(point1.y - point2.y); 
-      y *= y;
-      return Math.sqrt(x+y);
-    }      
+
+    if (spaceKey.isDown && dialogue.hidden) {
+      this.npcs.forEach(function(npc) {
+        npc.interact();
+      },this);
+
+    }
 
 
     if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
@@ -152,7 +126,8 @@ Game.MyHouse.prototype = {
     }
 
     player.update();
-   
+
+  
   },
   render: function() {
     // player.sprite.body.debug = true;

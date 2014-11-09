@@ -49,11 +49,13 @@ Game.Load.prototype = {
     this.game.load.tilemap('town','assets/maps/town.json',null,Phaser.Tilemap.TILED_JSON);
     this.game.load.spritesheet('town','assets/images/town.png',tileSize,tileSize,36);
     
-    this.game.load.tilemap('myhouse','assets/maps/myhouse.json',null,Phaser.Tilemap.TILED_JSON);
+    // this.game.load.tilemap('myhouse','assets/maps/myhouse.json',null,Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('myhouse','assets/maps/myhouse2.json',null,Phaser.Tilemap.TILED_JSON);
     this.game.load.spritesheet('furniture','assets/images/furniture.png',tileSize,tileSize,20);
     this.game.load.spritesheet('house','assets/images/house.png',tileSize,tileSize,20);
 
     this.game.load.image('textbox','assets/images/textbox.png',tileSize,tileSize);
+    this.game.load.spritesheet('dad','assets/images/npc_dad.png',64,64,12);
     this.game.load.spritesheet('mom','assets/images/npc_mom.png',64,64,12);
     this.game.load.spritesheet('jack','assets/images/npc_jack.png',64,64,12);
 
