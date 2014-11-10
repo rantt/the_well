@@ -71,6 +71,7 @@ Game.Town.prototype = {
 
     this.exitPoints = this.game.add.group();
     this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);
+    this.map.createFromObjects('objects', 30, 'town', 29, true, false, this.exitPoints);
 
 
     // Initial Player Position by tile
@@ -80,6 +81,7 @@ Game.Town.prototype = {
       player.tiley = 6;
       Game.lastLocation = "Town";
     }else if (Game.lastLocation == "Gramps") {
+      //Move to house without tweening
       Game.camera = {x:1, y:1}
       this.game.camera.x = Game.camera.x*Game.w;
       this.game.camera.y = Game.camera.y*Game.h;
