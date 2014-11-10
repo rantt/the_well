@@ -15,6 +15,7 @@ Game.Town = function(game) {
 Game.Town.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
+    this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
     Game.camera = {x:0, y:0}
 
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
@@ -74,8 +75,12 @@ Game.Town.prototype = {
 
 
     // Initial Player Position by tile
-    player.tilex = 6;
-    player.tiley = 6;
+    if (Game.lastLocation == "MyHouse") {
+      console.log("i'm here");
+      player.tilex = 5;
+      player.tiley = 6;
+      Game.lastLocation = "Town";
+    }
 
     player.create();
 

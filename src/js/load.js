@@ -10,6 +10,7 @@ var player;
 var Game = {
   w: tileSize*dCols,
   h: tileSize*dRows,
+  lastLocation: "MyHouse",
   camera: {x:0,y:0} 
 };
 
