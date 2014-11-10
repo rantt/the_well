@@ -3,94 +3,70 @@
 /*global Npc*/
 
 // var musicOn = true;
-      
-
 
 var spaceKey;
 
-Game.Town = function(game) {
+Game.Gramps = function(game) {
   this.game = game;
 };
 
-Game.Town.prototype = {
+Game.Gramps.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
+
     this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
 
+    Game.camera = {x:0, y:1};
+    this.game.camera.x = Game.camera.x*Game.w; 
+    this.game.camera.y = Game.camera.y*Game.h;
+
     this.game.world.setBounds(0, 0 ,Game.w ,Game.h);
-    this.map = this.game.add.tilemap('town');
-    this.map.addTilesetImage('town');
+    this.map = this.game.add.tilemap('gramps');
+    this.map.addTilesetImage('house');
+    this.map.addTilesetImage('furniture');
     this.layer1 = this.map.createLayer('layer1');
     this.layer1.resizeWorld();
     this.layer2 = this.map.createLayer('layer2');
     this.layer2.resizeWorld();
-
 
     //Debug
     // this.layer1.debug = true;
     // this.layer2.debug = true;
 
 
-    // Gray Brick
-    this.map.setCollision([13,14,15]);
-
-    // Trees
-    this.map.setCollision([16,17,18],true,'layer2');
-    
-    this.map.setCollision(21);
-    this.map.setCollision(22);
-    this.map.setCollision(23);
-    this.map.setCollision(24);
+    this.map.setCollision(2); //empty space
+    this.map.setCollision(12); //wall lower
+    this.map.setCollision(13); //wall upper
     
 
-    // TODO: Roof tiles should overlap sprite
-    // Roof 
-    this.map.setCollision(25);
-    this.map.setCollision(26);
-    this.map.setCollision(27);
-    this.map.setCollision(32);
-    this.map.setCollision(52);
+    this.map.setCollision(38, true, 'layer2'); //table upper left
+    this.map.setCollision(39, true, 'layer2'); //table upper right
+    this.map.setCollision(40, true, 'layer2'); //table lower left
+    this.map.setCollision(41, true, 'layer2'); //table lower right
+    this.map.setCollision(42, true, 'layer2'); //table mid left
+    this.map.setCollision(43, true, 'layer2'); //table mid right
 
-
-    // this.map.setCollision(28);
-     
-    // Signs
-    this.map.setCollision(33,true,'layer2');
-
-    console.log('objects=',this.map.objects);
-
+    this.map.setCollision(27, true, 'layer2'); //end table
+    
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 37, 'mom', 0, true, false, this.npcs, Npc);
-    this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs, Npc);
+    this.map.createFromObjects('objects', 54, 'dad', 3, true, false, this.npcs, Npc);
 
-    // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
 
-    this.exitPoints = this.game.add.group();
-    this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);
 
+    this.exitPoints = this.game.add.group();
+    this.map.createFromObjects('objects', 11, 'house', 10, true, false, this.exitPoints);
 
     // Initial Player Position by tile
-    if (Game.lastLocation == "MyHouse") {
-      Game.camera = {x:0, y:0}
-      player.tilex = 5;
-      player.tiley = 6;
-      Game.lastLocation = "Town";
-    }else if (Game.lastLocation == "Gramps") {
-      Game.camera = {x:1, y:1}
-      this.game.camera.x = Game.camera.x*Game.w;
-      this.game.camera.y = Game.camera.y*Game.h;
-
-      player.tilex = 20;
-      player.tiley = 17;
-      Game.lastLocation = "Town";
-    }
-
+    player.tilex = 6;
+    player.tiley = 17
     player.create();
-
+    Game.lastLocation = "Gramps";
+    // player.reposition();
+    
     // Music
     // this.music = this.game.add.sound('music');
     // this.music.volume = 0.5;
@@ -118,7 +94,6 @@ Game.Town.prototype = {
       this.npcs.forEach(function(npc) {
         npc.interact();
       },this);
-
     }
 
 
@@ -127,11 +102,11 @@ Game.Town.prototype = {
     }
 
     player.update();
-   
+
+  
   },
-  // render: function() {
+  render: function() {
     // player.sprite.body.debug = true;
-  // }
+  }
 
 };
-

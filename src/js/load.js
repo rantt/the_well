@@ -52,6 +52,7 @@ Game.Load.prototype = {
     
     // this.game.load.tilemap('myhouse','assets/maps/myhouse.json',null,Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('myhouse','assets/maps/myhouse2.json',null,Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('gramps','assets/maps/gramps.json',null,Phaser.Tilemap.TILED_JSON);
     this.game.load.spritesheet('furniture','assets/images/furniture.png',tileSize,tileSize,20);
     this.game.load.spritesheet('house','assets/images/house.png',tileSize,tileSize,20);
 

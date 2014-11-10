@@ -8,6 +8,7 @@ game.state.add('Load', Game.Load);
 game.state.add('Menu', Game.Menu);
 game.state.add('Town', Game.Town);
 game.state.add('MyHouse', Game.MyHouse);
+game.state.add('Gramps', Game.Gramps);
 game.state.add('Well', Game.Well);
 // game.state.add('World', Game.World);
 
