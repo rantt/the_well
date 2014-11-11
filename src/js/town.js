@@ -62,13 +62,12 @@ Game.Town.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    console.log("scene"+Game.scene);
 
     if (Game.scene === 1) {
       //Add Mom
       this.npcs.add(new Npc(this.game,tileSize*8, tileSize*3,'mom', 0, '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.' )); 
       //Add Jack
-      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well*Better ask your mom first.' )); 
+      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well.*Better ask your mom first.' )); 
     }
     
     

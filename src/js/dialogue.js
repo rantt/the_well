@@ -92,7 +92,7 @@ Dialogue.prototype = {
       }
       else
       {
-          //  Wait 2 seconds then start a new line
+          //  Wait 1 seconds then start a new line
           this.game.time.events.add(Phaser.Timer.SECOND, this.nextLine, this);
       }
   }
