@@ -30,8 +30,8 @@ Game.MyHouse.prototype = {
     this.layer2.resizeWorld();
 
     //Debug
-    this.layer1.debug = true;
-    this.layer2.debug = true;
+    // this.layer1.debug = true;
+    // this.layer2.debug = true;
 
 
     this.map.setCollision(2); //empty space
@@ -51,9 +51,13 @@ Game.MyHouse.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    // this.map.createFromObjects('objects', 54, 'dad', 3, true, false, this.npcs, Npc);
-    // this.npcs.add(Npc(this.game, 'mom', tileSize*8, tileSize*2, 3, '' )); 
-    Npc(this.game, 'mom', tileSize*8, tileSize*2, 3, '*blah*blah' ); 
+    if (Game.scene === 1) {
+      //Add Dad 
+      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*13,'dad', 3, '*Hey, buddy.*What are you up to?' )); 
+      //Add Gramps 
+      // this.npcs.add(new Npc(this.game,tileSize*9, tileSize*7,'gramps', 9, '' )); 
+    }
+
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
