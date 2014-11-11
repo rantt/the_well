@@ -27,20 +27,6 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":54,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "script":"*Playing with Jack*Ok, have fun."
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":576,
-                 "y":832
-                }, 
-                {
                  "gid":4,
                  "height":0,
                  "name":"",
