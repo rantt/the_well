@@ -19,7 +19,6 @@ Dialogue.prototype = {
   },
 
   create: function() {
-    console.log('created');
     this.sprite = this.game.add.sprite(0,11*64,'textbox'); 
     this.sprite.alpha = 0;
     console.log(this.sprite);
@@ -80,7 +79,7 @@ Dialogue.prototype = {
         this.game.time.events.repeat(80, this.content[this.index].length + 1, this.updateLine, this);
     }else {
       this.typing = false;
-      this.text.setText(this.line);
+      this.text.setText(this.line+' *');
     }
   },
 
@@ -94,7 +93,7 @@ Dialogue.prototype = {
       else
       {
           //  Wait 2 seconds then start a new line
-          this.game.time.events.add(Phaser.Timer.SECOND * 2, this.nextLine, this);
+          this.game.time.events.add(Phaser.Timer.SECOND, this.nextLine, this);
       }
   }
 }
