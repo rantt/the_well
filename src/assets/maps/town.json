@@ -109,38 +109,6 @@
                  "width":0,
                  "x":256,
                  "y":896
-                }, 
-                {
-                 "gid":37,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "facing":"0",
-                     "name":"mom",
-                     "script":"*You're playing with Jack again?*Well, ok* Be safe, don't come home too late.",
-                     "type":"npc"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":512,
-                 "y":192
-                }, 
-                {
-                 "gid":58,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "name":"jack",
-                     "script":"*You wanna play?*Did you ask your mom first?"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":576,
-                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",

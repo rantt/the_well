@@ -10,16 +10,27 @@ function lineDistance(point1, point2) {
   return Math.sqrt(x+y);
 }
 
-var Npc = function(game,x,y,name,startFrame) {
-  Phaser.Sprite.call(this, game, x+32, y-32 , name, startFrame);
+var Npc = function(game,x,y,name,startFrame,script) {
+  // console.log('stuff'+game,x,y,name,startFrame,script);
+  console.log('startFrame'+startFrame);
+  Phaser.Sprite.call(this, game, x+32, y-32, name); 
+
+  this.frame = parseInt(startFrame);
+  console.log('thisframe',this.frame);
+  
+  this.startFrame = startFrame;
   this.game.physics.p2.enable(this);
   this.body.kinematic = true; //immovable
+  
+  // this.frame = startFrame;
 
   //Set Frames for facing
   this.LEFT = 9;
   this.RIGHT = 6;
   this.UP = 3;
   this.DOWN = 0;
+
+  this.script = script;
 
 };
 
@@ -47,6 +58,8 @@ Npc.prototype.interact = function() {
 
 
           dialogue.show(this.script.split('*'));
+        }else {
+          this.frame = this.startFrame;
         }
 
 };

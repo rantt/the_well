@@ -62,8 +62,19 @@ Game.Town.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 37, 'mom', 0, true, false, this.npcs, Npc);
-    this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs, Npc);
+    console.log("scene"+Game.scene);
+
+    if (Game.scene === 1) {
+      //Add Mom
+      this.npcs.add(new Npc(this.game,tileSize*8, tileSize*3,'mom', 0, '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.' )); 
+      //Add Jack
+      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well*Better ask your mom first.' )); 
+    }
+    
+    
+
+    // this.map.createFromObjects('objects', 37, 'mom', 0, true, false, this.npcs, Npc);
+    // this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs, Npc);
 
     // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
     this.physics.p2.convertTilemap(this.map, this.layer1);
