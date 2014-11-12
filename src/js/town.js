@@ -68,13 +68,19 @@ Game.Town.prototype = {
       this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.' )); 
       
       //Add Jack
-      this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well.*Better ask your mom first.' );
-      this.jack.animations.add('right', [7,8],6,true);
-      this.jack.wentToWell = false;
-      this.npcs.add(this.jack); 
+      if (Game.jackAtWell == false) {
+        this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the old well.*Better ask your mom first.' );
+        this.jack.animations.add('right', [7,8],6,true);
+        this.npcs.add(this.jack); 
+
+      }else {
+        this.jack = new Npc(this.game,tileSize*6, tileSize*15,'jack', 9, '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.' );
+        this.npcs.add(this.jack); 
+      }
+
       //Add Clara
       
-      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, '*Hey, wanna play?*Jack again? You always play with him.')
+      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, '*Hey, wanna play?*Jack huh? You always play with him.*Nevermind then!')
       this.clara.animations.add('skipping',[12,13,14],6,true);        
       this.clara.animations.play('skipping');
       this.npcs.add(this.clara); 
@@ -121,10 +127,12 @@ Game.Town.prototype = {
     var t = this.game.add.tween(this.jack.body).to({x: this.jack.body.x+256}, 550);
     t.start();
     t.onComplete.add(function() {
-      this.jack.wentToWell = true;
+      Game.jackAtWell = true;
       this.jack.body.x = tileSize*6-32; 
       this.jack.body.y = tileSize*15-32; 
       this.jack.frame = 9;
+      this.jack.script = '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.'.split('*');
+      this.jack.spoke = false;
       this.jack.animations.stop();
     }, this);
   },
@@ -138,7 +146,7 @@ Game.Town.prototype = {
       }
     }
 
-    if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (this.jack.wentToWell === false)) {
+    if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (Game.jackAtWell === false)) {
      this.jackLeaves(); 
     }
 
