@@ -67,10 +67,13 @@ Game.Town.prototype = {
       //Add Mom
       this.npcs.add(new Npc(this.game,tileSize*8, tileSize*3,'mom', 0, '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.' )); 
       //Add Jack
-      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well.*Better ask your mom first.' )); 
+      this.jack = new Npc(this.game,tileSize*9, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well.*Better ask your mom first.' );
+      this.jack.animations.add('right', [7,8],6,true);
+      this.jack.wentToWell == false;
+      this.npcs.add(this.jack); 
       //Add Clara
       this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, '*Hey, wanna play?')
-      this.clara.animations.add('skipping',[13,14,15],6,true);        
+      this.clara.animations.add('skipping',[12,13,14],6,true);        
       this.clara.animations.play('skipping');
       this.npcs.add(this.clara); 
     }
@@ -119,14 +122,37 @@ Game.Town.prototype = {
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
+  jackLeaves: function() {
+    if (this.tweening) {
+      return;
+    }
 
+  },
   update: function() {
 
-    if (!dialogue.typing) {
-      this.clara.play('skipping');
-    }else {
-      this.clara.animations.stop();
+    // if (dialogue.speaker === this.clara) {
+    //   this.clara.animations.stop();
+    // }else {
+    //   if (this.clara.animations.currentAnim != 'skipping') {
+    //     this.clara.play('skipping');
+    //   }
+    // }
+
+    if ((this.jack.spoke === true) && (!dialogue.typing)) {
+     // this.jack.animations.play('right'); 
+     // var t = this.game.add.tween(this.jack).to({x: this.jack.x+256, y: this.jack.y}, 250);
+     // t.start();
+     // console.log(t);
+     // t.onComplete.add(function() {
+     //   this.nextLine();
+     // }, this);
     }
+
+    // if (!dialogue.typing) {
+    //   this.clara.play('skipping');
+    // }else {
+    //   this.clara.animations.stop();
+    // }
 
     this.exitPoints.forEach(function(ep) {
       b1 = ep.getBounds();

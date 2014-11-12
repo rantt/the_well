@@ -4,12 +4,13 @@
 
 Dialogue = function(game) {
   this.game = game;
-  this.hidden = true;
+  this.hidden = true; //hide dialogue box on creation
   this.sprite = null;
   this.index = 0;
   this.line = '';
   this.text;
   this.typing = false;
+  this.speaker = null; //the sprite/npc currently speaking
 };
 
 Dialogue.prototype = {
@@ -21,14 +22,14 @@ Dialogue.prototype = {
   create: function() {
     this.sprite = this.game.add.sprite(0,11*64,'textbox'); 
     this.sprite.alpha = 0;
-    console.log(this.sprite);
     this.text = this.game.add.bitmapText(30, 7*64+30, 'minecraftia', '', 30)
   },
 
-  show: function(content) {
+  show: function(speaker, content) {
     if (this.typing) {
      return;
     }
+    this.speaker = speaker;
     this.content = content;
     this.typing = true; 
     this.hidden = false;
@@ -79,6 +80,7 @@ Dialogue.prototype = {
         this.game.time.events.repeat(80, this.content[this.index].length + 1, this.updateLine, this);
     }else {
       this.typing = false;
+      this.speaker = null;
       this.text.setText(this.line+' *');
     }
   },

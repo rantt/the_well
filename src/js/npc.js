@@ -57,10 +57,10 @@ Npc.prototype.interact = function() {
 
     //If already talked to, only repeat the last line
     if (this.spoke === false) {
-      dialogue.show(this.script);
-        this.spoke = true;
+      dialogue.show(this,this.script);
+      this.spoke = true;
     }else {
-      dialogue.show(Array('',this.script[this.script.length-1]));
+      dialogue.show(this, Array('',this.script[this.script.length-1]));
     }
 
   }else {
