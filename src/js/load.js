@@ -73,6 +73,7 @@ Game.Load.prototype = {
 
     // Music Track
     this.game.load.audio('music','assets/audio/a_theme.mp3');
+    this.game.load.audio('tomb','assets/audio/forgotten_tombs.mp3');
 
   },
   create: function() {

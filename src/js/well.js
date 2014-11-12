@@ -20,6 +20,11 @@ Game.Well.prototype = {
     this.game.load.spritesheet('player','assets/images/hero_x64.png',64,64,12);
   },
   create: function() {
+    Game.music.stop();
+    Game.music = this.game.add.sound('tomb');
+    Game.music.volume = 0.5;
+    Game.music.play('',0,1,true);
+
     // this.game.world.setBounds(0, 0, Game.w, Game.h);
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
     
