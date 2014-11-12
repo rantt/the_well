@@ -65,25 +65,21 @@ Game.Town.prototype = {
 
     if (Game.scene === 1) {
       //Add Mom
-      this.npcs.add(new Npc(this.game,tileSize*8, tileSize*3,'mom', 0, '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.' )); 
+      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.' )); 
+      
       //Add Jack
-      this.jack = new Npc(this.game,tileSize*9, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well.*Better ask your mom first.' );
+      this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well.*Better ask your mom first.' );
       this.jack.animations.add('right', [7,8],6,true);
-      this.jack.wentToWell == false;
+      this.jack.wentToWell = false;
       this.npcs.add(this.jack); 
       //Add Clara
-      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, '*Hey, wanna play?')
+      
+      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, '*Hey, wanna play?*Jack again? You always play with him.')
       this.clara.animations.add('skipping',[12,13,14],6,true);        
       this.clara.animations.play('skipping');
       this.npcs.add(this.clara); 
     }
     
-    
-
-    // this.map.createFromObjects('objects', 37, 'mom', 0, true, false, this.npcs, Npc);
-    // this.map.createFromObjects('objects', 58, 'jack', 9, true, false, this.npcs, Npc);
-
-    // this.layerobjects_tiles = this.game.physics.p2.convertCollisionObjects(this.map,"objects");
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
 
@@ -110,12 +106,6 @@ Game.Town.prototype = {
     }
 
     player.create();
-
-    // Music
-    // this.music = this.game.add.sound('music');
-    // this.music.volume = 0.5;
-    // this.music.play('',0,1,true);
-
     dialogue.create();
 
     // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
@@ -123,36 +113,34 @@ Game.Town.prototype = {
 
   },
   jackLeaves: function() {
+    //Jack Walks off and goes to the well
     if (this.tweening) {
       return;
     }
-
+    this.jack.animations.play('right');
+    var t = this.game.add.tween(this.jack.body).to({x: this.jack.body.x+256}, 550);
+    t.start();
+    t.onComplete.add(function() {
+      this.jack.wentToWell = true;
+      this.jack.body.x = tileSize*6-32; 
+      this.jack.body.y = tileSize*15-32; 
+      this.jack.frame = 9;
+      this.jack.animations.stop();
+    }, this);
   },
   update: function() {
 
-    // if (dialogue.speaker === this.clara) {
-    //   this.clara.animations.stop();
-    // }else {
-    //   if (this.clara.animations.currentAnim != 'skipping') {
-    //     this.clara.play('skipping');
-    //   }
-    // }
-
-    if ((this.jack.spoke === true) && (!dialogue.typing)) {
-     // this.jack.animations.play('right'); 
-     // var t = this.game.add.tween(this.jack).to({x: this.jack.x+256, y: this.jack.y}, 250);
-     // t.start();
-     // console.log(t);
-     // t.onComplete.add(function() {
-     //   this.nextLine();
-     // }, this);
+    if (dialogue.speaker === this.clara) {
+      this.clara.animations.stop();
+    }else {
+      if (this.clara.animations.currentAnim != 'skipping') {
+        this.clara.play('skipping');
+      }
     }
 
-    // if (!dialogue.typing) {
-    //   this.clara.play('skipping');
-    // }else {
-    //   this.clara.animations.stop();
-    // }
+    if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (this.jack.wentToWell === false)) {
+     this.jackLeaves(); 
+    }
 
     this.exitPoints.forEach(function(ep) {
       b1 = ep.getBounds();
@@ -179,7 +167,7 @@ Game.Town.prototype = {
    
   },
   // render: function() {
-    // player.sprite.body.debug = true;
+    // this.jack.body.debug = true;
   // }
 
 };
