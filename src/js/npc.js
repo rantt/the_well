@@ -12,6 +12,8 @@ function lineDistance(point1, point2) {
 
 var Npc = function(game,x,y,name,startFrame,script) {
   Phaser.Sprite.call(this, game, x+32, y-32, name); 
+  this.anchor.setTo(0.5,0.5);
+  
   this.frame = parseInt(startFrame);
   
   this.startFrame = startFrame;
@@ -33,7 +35,7 @@ var Npc = function(game,x,y,name,startFrame,script) {
 
 Npc.prototype = Object.create(Phaser.Sprite.prototype);
 Npc.prototype.interact = function() {
-   if (lineDistance(player.sprite, this) < 64){
+   if (lineDistance(player.sprite, this) < 96){
      yDiff = this.y - player.sprite.y;
      xDiff = this.x - player.sprite.x;
 

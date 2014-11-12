@@ -53,9 +53,9 @@ Game.MyHouse.prototype = {
     this.npcs = this.game.add.group();
     if (Game.scene === 1) {
       //Add Dad 
-      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*13,'dad', 3, '*Hey, buddy.*What are you up to?' )); 
+      this.npcs.add(new Npc(this.game,tileSize*4-16, tileSize*15-16,'dad', 9, '*Hey, buddy.*What are you up to?' )); 
       //Add Gramps 
-      // this.npcs.add(new Npc(this.game,tileSize*9, tileSize*7,'gramps', 9, '' )); 
+      this.npcs.add(new Npc(this.game,tileSize*1+16, tileSize*15-16,'gramps', 6, '*Hey Kiddo.*You\'re playing with Jack?*Who\'s Jack?' )); 
     }
 
 

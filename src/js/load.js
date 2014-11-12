@@ -61,6 +61,8 @@ Game.Load.prototype = {
     this.game.load.spritesheet('dad','assets/images/npc_dad.png',64,64,12);
     this.game.load.spritesheet('mom','assets/images/npc_mom.png',64,64,12);
     this.game.load.spritesheet('jack','assets/images/npc_jack.png',64,64,12);
+    this.game.load.spritesheet('gramps','assets/images/npc_gramps.png',64,64,12);
+    this.game.load.spritesheet('clara','assets/images/npc_clara.png',64,64,15);
 
   
     dialogue = new Dialogue(this.game);

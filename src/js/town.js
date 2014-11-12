@@ -68,6 +68,11 @@ Game.Town.prototype = {
       this.npcs.add(new Npc(this.game,tileSize*8, tileSize*3,'mom', 0, '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.' )); 
       //Add Jack
       this.npcs.add(new Npc(this.game,tileSize*9, tileSize*7,'jack', 9, '*Hey, wanna play?*Let\'s go to the well.*Better ask your mom first.' )); 
+      //Add Clara
+      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, '*Hey, wanna play?')
+      this.clara.animations.add('skipping',[13,14,15],6,true);        
+      this.clara.animations.play('skipping');
+      this.npcs.add(this.clara); 
     }
     
     
@@ -116,6 +121,12 @@ Game.Town.prototype = {
   },
 
   update: function() {
+
+    if (!dialogue.typing) {
+      this.clara.play('skipping');
+    }else {
+      this.clara.animations.stop();
+    }
 
     this.exitPoints.forEach(function(ep) {
       b1 = ep.getBounds();
