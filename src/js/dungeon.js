@@ -212,7 +212,6 @@ Dungeon = function(game, dCols, dRows) {
   this.roomMin = 3;
   this.roomMax = 9;
   this.tileSize = 32;
-  // this.map = [];
 };
 
 Dungeon.prototype = {
