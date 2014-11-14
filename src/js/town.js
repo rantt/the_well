@@ -51,9 +51,6 @@ Game.Town.prototype = {
     // Signs
     this.map.setCollision(33,true,'layer2');
 
-    console.log('objects=',this.map.objects);
-
-
     // Load NPCs 
     this.npcs = this.game.add.group();
 
@@ -66,12 +63,15 @@ Game.Town.prototype = {
                            3: '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.'},
                   'clara': {1: '*Hi, nice day for skipping!',
                             2: '*Hey, wanna play?*Jack huh? You always play with him.*Nevermind then!',
-                            3: '*Rope?*I have skipping rope. Will that work?*It\'s not very long.  What\'s it for?'}
+                            3: '*Rope?*I have skipping rope. Will that work?'}
                 } 
- 
 
-    // console.log('state',this.game.state.current);
-    console.log('mom2', this.lines['mom'][2]);
+
+    console.log('state',this.game.state.current);
+    console.log('scene', Game.scene);
+
+    this.physics.p2.convertTilemap(this.map, this.layer1);
+    this.physics.p2.convertTilemap(this.map, this.layer2);
 
     //Add Mom
     this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, this.lines['mom'][Game.scene] )); 
@@ -80,14 +80,11 @@ Game.Town.prototype = {
     if (Game.scene === 1) {
       this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, this.lines['jack'][Game.scene]);
     }else {
-      this.jack = new Npc(this.game,tileSize*5, tileSize*14,'jack', 9, this.lines['jack'][Game.scene]);
+      this.jack = new Npc(this.game,tileSize*6, tileSize*15,'jack', 9, this.lines['jack'][Game.scene]);
     }
 
     //Add Clara
     this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, this.lines['clara'][Game.scene]);
-
-    console.log('clara',this.clara.name); 
-
 
     //Add NPC Animations
     this.jack.animations.add('right', [7,8],6,true);
@@ -97,9 +94,9 @@ Game.Town.prototype = {
     // Add NPCs to group
     this.npcs.add(this.clara); 
     this.npcs.add(this.jack); 
+
+    console.log(this.npcs);
     
-    this.physics.p2.convertTilemap(this.map, this.layer1);
-    this.physics.p2.convertTilemap(this.map, this.layer2);
 
     this.exitPoints = this.game.add.group();
     this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);
@@ -131,6 +128,10 @@ Game.Town.prototype = {
 
   },
   updateCharacterLines: function() {
+    if (this.updating) {
+      return;
+    }
+    this.updating = true;
     this.npcs.forEach(function(npc) {
       // npc.interact();
       console.log(npc.key);
@@ -138,6 +139,7 @@ Game.Town.prototype = {
       npc.spoke = false;
       // npc.script = this.lines
     },this);
+    this.updating = false;
   },
   jackLeaves: function() {
     //Jack Walks off and goes to the well
@@ -146,15 +148,14 @@ Game.Town.prototype = {
     }
     this.tweening = true;
     this.jack.animations.play('right');
-    var t = this.game.add.tween(this.jack.body).to({x: this.jack.body.x+256}, 750);
+    var t = this.game.add.tween(this.jack.body).to({x: this.jack.body.x+256}, 1000);
     t.start();
     t.onComplete.add(function() {
+      Game.scene = 2;
       this.tweening = false;
-      Game.jackAtWell = true;
       this.jack.body.x = tileSize*6-32; 
       this.jack.body.y = tileSize*15-32; 
       this.jack.frame = 9;
-      Game.scene = 2;
       this.jack.animations.stop();
       this.updateCharacterLines();
     }, this);
@@ -205,7 +206,7 @@ Game.Town.prototype = {
    
   },
   // render: function() {
-    // this.jack.body.debug = true;
+  //   this.jack.body.debug = true;
   // }
 
 };

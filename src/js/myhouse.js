@@ -54,16 +54,19 @@ Game.MyHouse.prototype = {
 
     this.lines = {
                    'dad': {1: '*Hey, buddy.*What are you up to?',
-                           2: '*Hey, buddy.*What are you up to?'},
-                   'gramps':  {1: '*Hey Kiddo.*You\'re playing with Jack?*Who\'s Jack?',
-                               2: '*Hey Kiddo.*You\'re playing with Jack?*Who\'s Jack?'}
+                           2: '*Hey, buddy.*What are you up to?',
+                           3: '*Should be a lamp in the kitchen.'},
+                   'gramps':  {1: '*Hey kiddo.*What can I do for you.',
+                               2: '*You\'re playing with Jack?*Who\'s Jack?'}
                  }
 
     
     //Add Dad 
-    this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, '*Hey, buddy.*What are you up to?' )); 
-    //Add Gramps 
-    this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 6, '*Hey Kiddo.*You\'re playing with Jack?*Who\'s Jack?' )); 
+    this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines['dad'][Game.scene] )); 
+    //Add Gramps
+    if (Game.scene !== 3) { 
+      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 6, this.lines['gramps'][Game.scene] )); 
+    }
 
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
