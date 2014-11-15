@@ -67,9 +67,6 @@ Game.Town.prototype = {
                 } 
 
 
-    console.log('state',this.game.state.current);
-    console.log('scene', Game.scene);
-
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
 
@@ -95,7 +92,6 @@ Game.Town.prototype = {
     this.npcs.add(this.clara); 
     this.npcs.add(this.jack); 
 
-    console.log(this.npcs);
     
 
     this.exitPoints = this.game.add.group();
@@ -123,7 +119,6 @@ Game.Town.prototype = {
     player.create();
     dialogue.create();
 
-    // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
@@ -133,11 +128,8 @@ Game.Town.prototype = {
     }
     this.updating = true;
     this.npcs.forEach(function(npc) {
-      // npc.interact();
-      console.log(npc.key);
       npc.script = this.lines[npc.key][Game.scene].split('*');
       npc.spoke = false;
-      // npc.script = this.lines
     },this);
     this.updating = false;
   },

@@ -81,13 +81,7 @@ Game.MyHouse.prototype = {
     player.tiley = 17
     player.create();
     Game.lastLocation = "MyHouse";
-    // player.reposition();
     
-    // Music
-    // this.music = this.game.add.sound('music');
-    // this.music.volume = 0.5;
-    // this.music.play('',0,1,true);
-
     dialogue.create();
 
     // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
