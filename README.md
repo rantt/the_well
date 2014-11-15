@@ -4,12 +4,15 @@ This game is a work-in-progress for the onegameamonth.com (#1GAM) challenge.  Th
 
 Developed using [Phaser.js](http://phaser.io)
 
-Music - [A Theme](http://opengameart.org/content/a-theme) by edwinnington
-[Forgotten Tomb](http://opengameart.org/content/forgoten-tomb-ambience) by kindland
+Music
+
+*  [A Theme](http://opengameart.org/content/a-theme) by edwinnington
+*  [Forgotten Tomb](http://opengameart.org/content/forgoten-tomb-ambience) by kindland
 
 SFX - None so far
 
 Sprites
+
 *  SpriteSomething
 *  Pixen
 *  Pixelmator
