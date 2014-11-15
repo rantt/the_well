@@ -59,7 +59,7 @@ Game.Town.prototype = {
                            2: '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.',
                            3: '*There might be some in the house.*Why don\'t you ask your father.'},
                   'jack': {1: '*Hey, wanna play?*Let\'s go to the old well.*Better ask your mom first.',
-                           2: '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.',
+                           2: '*Let\'s should go down there.*We\'ll need some stuff though.*Go get some rope and a light.',
                            3: '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.'},
                   'clara': {1: '*Hi, nice day for skipping!',
                             2: '*Hey, wanna play?*Jack huh? You always play with him.*Nevermind then!',
@@ -91,8 +91,6 @@ Game.Town.prototype = {
     // Add NPCs to group
     this.npcs.add(this.clara); 
     this.npcs.add(this.jack); 
-
-    
 
     this.exitPoints = this.game.add.group();
     this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);

@@ -53,9 +53,9 @@ Game.MyHouse.prototype = {
     this.npcs = this.game.add.group();
 
     this.lines = {
-                   'dad': {1: '*Hey, buddy.*What are you up to?',
-                           2: '*Hey, buddy.*What are you up to?',
-                           3: '*Should be a lamp in the kitchen.'},
+                   'dad': {1: '*Hi, son.*What are you up to?',
+                           2: '*Hi, son.*What are you up to?',
+                           3: '*Should be a lamp in the kitchen.*You should check the drawers.'},
                    'gramps':  {1: '*Hey kiddo.*What can I do for you.',
                                2: '*You\'re playing with Jack?*Who\'s Jack?'}
                  }
@@ -115,8 +115,8 @@ Game.MyHouse.prototype = {
 
   
   },
-  render: function() {
+  // render: function() {
     // player.sprite.body.debug = true;
-  }
+  // }
 
 };

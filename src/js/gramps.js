@@ -37,7 +37,13 @@ Game.Gramps.prototype = {
     this.map.setCollision(2); //empty space
     this.map.setCollision(12); //wall lower
     this.map.setCollision(13); //wall upper
-    
+
+
+    //Walls
+    this.map.setCollision(16); //wall lower
+    this.map.setCollision(17); //wall upper
+    this.map.setCollision(6); //wall lower
+    this.map.setCollision(7); //wall upper
 
     this.map.setCollision(38, true, 'layer2'); //table upper left
     this.map.setCollision(39, true, 'layer2'); //table upper right
@@ -46,12 +52,27 @@ Game.Gramps.prototype = {
     this.map.setCollision(42, true, 'layer2'); //table mid left
     this.map.setCollision(43, true, 'layer2'); //table mid right
 
+    //Cabinets
+
     this.map.setCollision(27, true, 'layer2'); //end table
+    this.map.setCollision(29, true, 'layer2'); //sink
+    this.map.setCollision(30, true, 'layer2'); //window
+    this.map.setCollision(31, true, 'layer2'); //end table
+    this.map.setCollision(32, true, 'layer2'); //end table
     
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    this.map.createFromObjects('objects', 54, 'dad', 3, true, false, this.npcs, Npc);
+
+    if (Game.scene === 3) {
+      if (Game.haveRope === false) {
+        this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 
+        this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*You found some rope.',false));
+      }else {
+        this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 
+        this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*Nothing here.',false));
+      }
+    }
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
@@ -65,16 +86,9 @@ Game.Gramps.prototype = {
     player.tiley = 17
     player.create();
     Game.lastLocation = "Gramps";
-    // player.reposition();
-    
-    // Music
-    // this.music = this.game.add.sound('music');
-    // this.music.volume = 0.5;
-    // this.music.play('',0,1,true);
 
     dialogue.create();
 
-    // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
@@ -92,7 +106,13 @@ Game.Gramps.prototype = {
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
-        npc.interact();
+        if ((npc.key === 'furniture') && (Game.haveRope === false)) {
+          Game.haveRope = true;
+          npc.interact();
+          npc.script = ['','Nothing here.'];
+        }else {
+          npc.interact();
+        }
       },this);
     }
 
@@ -105,8 +125,8 @@ Game.Gramps.prototype = {
 
   
   },
-  render: function() {
+  // render: function() {
     // player.sprite.body.debug = true;
-  }
+  // }
 
 };

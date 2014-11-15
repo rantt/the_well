@@ -11,7 +11,8 @@ var Game = {
   w: tileSize*dCols,
   h: tileSize*dRows,
   lastLocation: "MyHouse",
-  jackAtWell: false,    
+  haveRope: false,
+  haveLight: false,
   scene: 1, 
   camera: {x:0,y:0} 
 };

@@ -10,7 +10,7 @@ function lineDistance(point1, point2) {
   return Math.sqrt(x+y);
 }
 
-var Npc = function(game,x,y,name,startFrame,script) {
+var Npc = function(game,x,y,name,startFrame,script,facing) {
   // Phaser.Sprite.call(this, game, x+32, y-32, name); 
   Phaser.Sprite.call(this, game, x-32, y-32, name); 
   this.anchor.setTo(0.5,0.5);
@@ -18,6 +18,8 @@ var Npc = function(game,x,y,name,startFrame,script) {
   this.frame = parseInt(startFrame);
   
   this.startFrame = startFrame;
+
+  this.facing = typeof facing !== 'undefined' ? facing : true;
   this.game.physics.p2.enable(this);
   this.body.kinematic = true; //immovable
   
@@ -41,19 +43,21 @@ Npc.prototype.interact = function() {
      xDiff = this.x - player.sprite.x;
 
      //Face the player
-     if (Math.abs(xDiff) > Math.abs(yDiff)) {
-       if (xDiff > 0) {
-         this.frame = this.LEFT;
+     if (this.facing == true) {
+       if (Math.abs(xDiff) > Math.abs(yDiff)) {
+         if (xDiff > 0) {
+           this.frame = this.LEFT;
+         }else {
+           this.frame = this.RIGHT;
+         }
        }else {
-         this.frame = this.RIGHT;
-       }
-     }else {
-       if (yDiff > 0) {
-         this.frame = this.UP;
-       }else {
-         this.frame = this.DOWN;
-       }
+         if (yDiff > 0) {
+           this.frame = this.UP;
+         }else {
+           this.frame = this.DOWN;
+         }
 
+       }
      }
 
     //If already talked to, only repeat the last line
