@@ -47,7 +47,7 @@ Player.prototype = {
   },
   update: function() {
 
-    if (!dialogue.typing) {
+    if (dialogue.hidden) {
       this.sprite.body.velocity.x = 0;
       this.sprite.body.velocity.y = 0;
       this.movements();
