@@ -55,19 +55,25 @@ Game.MyHouse.prototype = {
     this.lines = {
                    'dad': {1: '*Hi, son.*What are you up to?',
                            2: '*Hi, son.*What are you up to?',
-                           3: '*Should be a lamp in the kitchen.*You should check the drawers.'},
+                           3: '*Might be a lamp in the kitchen.*You should check the drawers.'},
                    'gramps':  {1: '*Hey kiddo.*What can I do for you.',
                                2: '*You\'re playing with Jack?*Who\'s Jack?'}
                  }
 
     
+    Game.scene = 3;
     //Add Dad 
     this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines['dad'][Game.scene] )); 
-    //Add Gramps
-    if (Game.scene !== 3) { 
+    if (Game.scene < 3) {
+      //Add Gramps 
       this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 6, this.lines['gramps'][Game.scene] )); 
+    }else if (Game.scene === 3) {
+      if (Game.haveLight === false) {
+        this.npcs.add(new Npc(this.game,tileSize*7,tileSize*12,'furniture',4,'*You take the lamp.',false));
+      }else {
+        this.npcs.add(new Npc(this.game,tileSize*7,tileSize*12,'furniture',4,'*You already have the lamp.',false));
+      }
     }
-
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
     this.physics.p2.convertTilemap(this.map, this.layer2);
@@ -102,7 +108,13 @@ Game.MyHouse.prototype = {
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
-        npc.interact();
+        if ((npc.key === 'furniture') && (Game.haveLight === false)) {
+          Game.haveLight = true;
+          npc.interact();
+          npc.script = ['','You already have the lamp.'];
+        }else {
+          npc.interact();
+        }
       },this);
     }
 

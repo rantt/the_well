@@ -67,10 +67,10 @@ Game.Gramps.prototype = {
     if (Game.scene === 3) {
       if (Game.haveRope === false) {
         this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 
-        this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*You found some rope.',false));
+        this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*You take the rope.',false));
       }else {
         this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 
-        this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*Nothing here.',false));
+        this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*You already have the rope.',false));
       }
     }
 
@@ -109,7 +109,7 @@ Game.Gramps.prototype = {
         if ((npc.key === 'furniture') && (Game.haveRope === false)) {
           Game.haveRope = true;
           npc.interact();
-          npc.script = ['','Nothing here.'];
+          npc.script = ['','You already have the rope.'];
         }else {
           npc.interact();
         }
