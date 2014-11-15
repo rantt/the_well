@@ -28,6 +28,7 @@ Game.Town.prototype = {
     // this.layer1.debug = true;
     // this.layer2.debug = true;
 
+    // this.map.setCollision(10);
     // Gray Brick
     this.map.setCollision([13,14,15]);
 
@@ -176,7 +177,10 @@ Game.Town.prototype = {
       bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
         console.log('you are in a door going to ' + ep.destination);
-        this.game.state.start(ep.destination);
+
+        if ((ep.destination != 'Well') ||  ((ep.destination === 'Well') && (Game.haveLight === true) && (Game.haveRope === true))) {
+          this.game.state.start(ep.destination);
+        }
       }
     }, this);
 

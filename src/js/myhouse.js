@@ -61,7 +61,6 @@ Game.MyHouse.prototype = {
                  }
 
     
-    Game.scene = 3;
     //Add Dad 
     this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines['dad'][Game.scene] )); 
     if (Game.scene < 3) {
