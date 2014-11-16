@@ -4,7 +4,6 @@
 
 // var musicOn = true;
 
-var spaceKey;
 
 Game.Town = function(game) {
   this.game = game;
@@ -57,13 +56,16 @@ Game.Town.prototype = {
     this.lines = {
                   'mom':  {1: '*Hi honey.*Beautiful day, isn\'t it?',
                            2: '*You wanna play with Jack?*Oh, ok.  Have fun.*Be home for dinner.',
-                           3: '*There might be some in the house.*Why don\'t you ask your father.'},
+                           3: '*There might be some in the house.*Why don\'t you ask your father.',
+                           4: '*There might be some in the house.*Why don\'t you ask your father.'},
                   'jack': {1: '*Hey, wanna play?*Let\'s go to the old well.*Better ask your mom first.',
                            2: '*Let\'s should go down there.*We\'ll need some stuff though.*Go get some rope and a light.',
-                           3: '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.'},
+                           3: '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.',
+                           4: '*Oh, good you got everything!*What are we waiting for?, Let\'s go!'},
                   'clara': {1: '*Hi, nice day for skipping!',
                             2: '*Hey, wanna play?*Jack huh? You always play with him.*Nevermind then!',
-                            3: '*Rope?*I have skipping rope. Will that work?'}
+                            3: '*Rope?*I have skipping rope. Will that work?',
+                            4: '*Rope?*I have skipping rope. Will that work?'}
                 } 
 
 
@@ -72,6 +74,10 @@ Game.Town.prototype = {
 
     //Add Mom
     this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, this.lines['mom'][Game.scene] )); 
+
+    if ((Game.haveRope) && (Game.haveLight)) {
+      Game.scene = 4;
+    }
     
     //Add Jack
     if (Game.scene === 1) {
@@ -117,7 +123,6 @@ Game.Town.prototype = {
     player.create();
     dialogue.create();
 
-    spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
   updateCharacterLines: function() {

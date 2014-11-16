@@ -6,6 +6,7 @@ var dRows = 10;
 var dCols = 12;
 
 var player;
+var spaceKey;
 
 var Game = {
   w: tileSize*dCols,
@@ -76,6 +77,9 @@ Game.Load.prototype = {
     // Music Track
     this.game.load.audio('music','assets/audio/a_theme.mp3');
     this.game.load.audio('tomb','assets/audio/forgotten_tombs.mp3');
+
+
+    spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
   create: function() {

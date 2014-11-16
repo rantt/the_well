@@ -10,6 +10,7 @@ game.state.add('Town', Game.Town);
 game.state.add('MyHouse', Game.MyHouse);
 game.state.add('Gramps', Game.Gramps);
 game.state.add('Well', Game.Well);
+game.state.add('Darkness', Game.Darkness);
 // game.state.add('World', Game.World);
 
 game.state.start('Boot');

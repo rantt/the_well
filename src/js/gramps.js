@@ -63,7 +63,6 @@ Game.Gramps.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    Game.scene = 3;
     if (Game.scene === 3) {
       if (Game.haveRope === false) {
         this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 

@@ -2,8 +2,18 @@
 /* global Dungeon */
 /* global player */
 /* global tileSize */
+/* global Npc */
 
 //  Lighting effect adapted from http://gamemechanicexplorer.com/#lighting-3 by John Watson (@yafd)
+function lineDistance(point1, point2) {
+  var x = 0;
+  var y = 0;
+  x = Math.abs(point1.x - point2.x);
+  x *= x;
+  y = Math.abs(point1.y - point2.y); 
+  y *= y;
+  return Math.sqrt(x+y);
+}
 
 var wKey;
 var aKey;
@@ -17,13 +27,14 @@ Game.Well = function(game) {
 Game.Well.prototype = {
   preload: function() {
     this.game.load.image('tiles', 'assets/images/well.png');
+    this.game.load.spritesheet('well', 'assets/images/well.png',64,64,16);
     this.game.load.spritesheet('player','assets/images/hero_x64.png',64,64,12);
   },
   create: function() {
     Game.music.stop();
-    Game.music = this.game.add.sound('tomb');
-    Game.music.volume = 0.5;
-    Game.music.play('',0,1,true);
+    // Game.music = this.game.add.sound('tomb');
+    // Game.music.volume = 0.5;
+    // Game.music.play('',0,1,true);
 
     // this.game.world.setBounds(0, 0, Game.w, Game.h);
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
@@ -38,10 +49,14 @@ Game.Well.prototype = {
     //Generate a new maze 
     dungeon = new Dungeon(game, dCols, dRows);
     dungeon.create();
-    // console.log('count'+dungeon.nodes.length);
 
     //Put Player in the first room created
     starting_room = dungeon.nodes[0].room;
+    lastRoom = dungeon.nodes[dungeon.nodes.length-1].room;
+
+    console.log('last room',lastRoom);
+    console.log('last room cx',lastRoom.center.x);
+    console.log('last room cy',lastRoom.center.y);
 
     this.game.load.tilemap('level', null, dungeon.drawLevel(), Phaser.Tilemap.CSV );
     console.log(dungeon.drawLevel());
@@ -56,6 +71,7 @@ Game.Well.prototype = {
     this.layer.resizeWorld();
 
     this.physics.p2.convertTilemap(this.map, this.layer);
+
 
     // this.layer.debug = true;
 
@@ -94,8 +110,17 @@ Game.Well.prototype = {
     // everything below this sprite.
     lightSprite.blendMode = Phaser.blendModes.MULTIPLY;
 
+    this.stairs = this.game.add.sprite(lastRoom.center.x*64, lastRoom.center.y*64,'well',9);
+    this.game.physics.p2.enable(this.stairs);
+    this.stairs.body.fixedRotation= true;
+    this.stairs.body.kinematic = true; //immovable
+
   },
   update: function() {
+    if (lineDistance(this.player, this.stairs) < 64){
+      this.game.state.start('Darkness'); 
+    }
+
     this.updatePlayerMovements();
     this.updateShadowTexture();
   },
@@ -186,6 +211,9 @@ Game.Well.prototype = {
       }
     } 
   },
+  render: function() {
+    this.stairs.body.debug = true;
+  }
   // render: function() {
   //   this.game.debug.text('worldx: '+ this.game.world.x+' worldy: '+this.game.world.y, 64, 64);
   //   this.player.body.debug = true;
