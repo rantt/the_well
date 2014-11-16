@@ -25,7 +25,7 @@ Game.Menu.prototype =  {
         Game.music = this.game.add.sound('music');
         Game.music.volume = 0.5;
         Game.music.play('',0,1,true);
-        this.game.state.start('Well');
+        // this.game.state.start('Well');
       }
     }
 };

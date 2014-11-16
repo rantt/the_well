@@ -60,7 +60,7 @@ Game.MyHouse.prototype = {
                                2: '*You\'re playing with Jack?*Who\'s Jack?'}
                  }
 
-    
+   Game.scene = 3;
     //Add Dad 
     this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines['dad'][Game.scene] )); 
     if (Game.scene < 3) {
@@ -106,11 +106,14 @@ Game.MyHouse.prototype = {
     }, this);
 
     if (spaceKey.isDown && dialogue.hidden) {
+      console.log('blah',Game.haveLight);
       this.npcs.forEach(function(npc) {
         if ((npc.key === 'furniture') && (Game.haveLight === false)) {
-          Game.haveLight = true;
-          npc.interact();
-          npc.script = ['','You already have the lamp.'];
+          if (npc.interact()) {
+            Game.haveLight = true;
+            npc.interact();
+            npc.script = ['','You already have the lamp.'];
+          }
         }else {
           npc.interact();
         }

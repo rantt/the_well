@@ -63,7 +63,7 @@ Game.Gramps.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-
+    Game.scene = 3;
     if (Game.scene === 3) {
       if (Game.haveRope === false) {
         this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 
@@ -107,9 +107,10 @@ Game.Gramps.prototype = {
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
         if ((npc.key === 'furniture') && (Game.haveRope === false)) {
-          Game.haveRope = true;
-          npc.interact();
-          npc.script = ['','You already have the rope.'];
+          if (npc.interact() === true) {
+            Game.haveRope = true;
+            npc.script = ['','You already have the rope.'];
+          }
         }else {
           npc.interact();
         }

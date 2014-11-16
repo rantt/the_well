@@ -28,7 +28,6 @@ Game.Town.prototype = {
     // this.layer1.debug = true;
     // this.layer2.debug = true;
 
-    // this.map.setCollision(10);
     // Gray Brick
     this.map.setCollision([13,14,15]);
 
@@ -47,7 +46,7 @@ Game.Town.prototype = {
     this.map.setCollision(32);
     this.map.setCollision(52);
 
-    // this.map.setCollision(28);
+    this.map.setCollision(30);
      
     // Signs
     this.map.setCollision(33,true,'layer2');

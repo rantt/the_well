@@ -67,9 +67,10 @@ Npc.prototype.interact = function() {
     }else {
       dialogue.show(this, Array('',this.script[this.script.length-1]));
     }
-
+    return true;
   }else {
     this.frame = this.startFrame;
+    return false;
   }
 
 };
