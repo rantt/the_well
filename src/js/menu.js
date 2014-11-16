@@ -20,13 +20,11 @@ Game.Menu.prototype =  {
     update: function() {
       //Click to Start
       if (this.game.input.activePointer.isDown){
-        // this.game.state.start('Town');
+        this.game.state.start('Town');
         // // Music
         Game.music = this.game.add.sound('music');
         Game.music.volume = 0.5;
         Game.music.play('',0,1,true);
-        Game.scene = 4;
-        this.game.state.start('Darkness');
       }
     }
 };
