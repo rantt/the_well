@@ -10,6 +10,12 @@ Game.Town = function(game) {
 };
 
 Game.Town.prototype = {
+  preload: function() {
+    this.scene = parseInt(localStorage.getItem('scene'));
+    this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
+    this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
+    console.log('scene',this.scene);
+  },
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
     this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
@@ -24,10 +30,6 @@ Game.Town.prototype = {
 
     //Get Locally Stored vars
 
-    this.scene = parseInt(localStorage.getItem('scene'));
-    this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
-    this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
-    console.log('scene',this.scene);
 
     //Debug
     // this.layer1.debug = true;
@@ -52,6 +54,7 @@ Game.Town.prototype = {
     this.map.setCollision(52);
 
     this.map.setCollision(30);
+    this.map.setCollision(34,true,'layer2');
      
     // Signs
     this.map.setCollision(33,true,'layer2');
@@ -90,7 +93,7 @@ Game.Town.prototype = {
     if ((this.scene === 1) || (this.scene === 7)) {
       this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, this.lines['jack'][this.scene]);
     }else {
-      this.jack = new Npc(this.game,tileSize*6, tileSize*15,'jack', 9, this.lines['jack'][this.scene]);
+      this.jack = new Npc(this.game,tileSize*5, tileSize*15,'jack', 9, this.lines['jack'][this.scene]);
     }
 
     if (this.scene !== 7 ) {
@@ -111,6 +114,7 @@ Game.Town.prototype = {
     this.exitPoints = this.game.add.group();
     this.map.createFromObjects('objects', 29, 'town', 28, true, false, this.exitPoints);
     this.map.createFromObjects('objects', 30, 'town', 29, true, false, this.exitPoints);
+    this.map.createFromObjects('objects', 34, 'town', 33, true, false, this.exitPoints);
 
 
     // Initial Player Position by tile
@@ -159,7 +163,7 @@ Game.Town.prototype = {
       this.scene = 2;
       localStorage.setItem('scene', '2'); 
       this.tweening = false;
-      this.jack.body.x = tileSize*6-32; 
+      this.jack.body.x = tileSize*5-32; 
       this.jack.body.y = tileSize*15-32; 
       this.jack.frame = 9;
       this.jack.animations.stop();
@@ -199,7 +203,8 @@ Game.Town.prototype = {
       b1 = ep.getBounds();
       bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
-        if ((ep.destination != 'Well') ||  ((ep.destination === 'Well') && (Game.haveLight === true) && (Game.haveRope === true))) {
+        console.log(ep.destination);
+        if ((ep.destination != 'Well') ||  ((ep.destination === 'Well') && (this.haveLamp === true) && (this.haveRope === true))) {
           this.game.state.start(ep.destination);
         }
       }
