@@ -22,6 +22,12 @@ Game.Town.prototype = {
     this.layer2 = this.map.createLayer('layer2');
     this.layer2.resizeWorld();
 
+    //Get Locally Stored vars
+
+    this.scene = parseInt(localStorage.getItem('scene'));
+    this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
+    this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
+    console.log('scene',this.scene);
 
     //Debug
     // this.layer1.debug = true;
@@ -74,23 +80,24 @@ Game.Town.prototype = {
     this.physics.p2.convertTilemap(this.map, this.layer2);
 
     //Add Mom
-
-    if ((Game.haveRope) && (Game.haveLight)) {
-      Game.scene = 4;
+    if ((this.haveRope) && (this.haveLamp) && (this.scene !== 7)) {
+      this.scene = 4;
+      localStorage.setItem('scene', '4'); 
     }
     
+    
     //Add Jack
-    if ((Game.scene === 1) || (Game.scene === 7)) {
-      this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, this.lines['jack'][Game.scene]);
+    if ((this.scene === 1) || (this.scene === 7)) {
+      this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, this.lines['jack'][this.scene]);
     }else {
-      this.jack = new Npc(this.game,tileSize*6, tileSize*15,'jack', 9, this.lines['jack'][Game.scene]);
+      this.jack = new Npc(this.game,tileSize*6, tileSize*15,'jack', 9, this.lines['jack'][this.scene]);
     }
 
-    if (Game.scene !== 7 ) {
-      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, this.lines['mom'][Game.scene] )); 
+    if (this.scene !== 7 ) {
+      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, this.lines['mom'][this.scene] )); 
 
       //Add Clara
-      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, this.lines['clara'][Game.scene]);
+      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, this.lines['clara'][this.scene]);
       this.clara.animations.add('skipping',[12,13,14],6,true);        
       this.clara.animations.play('skipping');
 
@@ -134,7 +141,7 @@ Game.Town.prototype = {
     }
     this.updating = true;
     this.npcs.forEach(function(npc) {
-      npc.script = this.lines[npc.key][Game.scene].split('*');
+      npc.script = this.lines[npc.key][this.scene].split('*');
       npc.spoke = false;
     },this);
     this.updating = false;
@@ -149,7 +156,8 @@ Game.Town.prototype = {
     var t = this.game.add.tween(this.jack.body).to({x: this.jack.body.x+256}, 1000);
     t.start();
     t.onComplete.add(function() {
-      Game.scene = 2;
+      this.scene = 2;
+      localStorage.setItem('scene', '2'); 
       this.tweening = false;
       this.jack.body.x = tileSize*6-32; 
       this.jack.body.y = tileSize*15-32; 
@@ -160,22 +168,30 @@ Game.Town.prototype = {
   },
   update: function() {
 
-    if (dialogue.speaker === this.clara) {
-      this.clara.animations.stop();
-    }else {
-      if (this.clara.animations.currentAnim != 'skipping') {
-        this.clara.play('skipping');
+    if (this.scene !== 7) {
+      if (dialogue.speaker === this.clara) {
+        this.clara.animations.stop();
+      }else {
+        if (this.clara.animations.currentAnim != 'skipping') {
+          this.clara.play('skipping');
+        }
+      }
+    }else{
+      if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden)) {
+        this.jackLeaves();    
       }
     }
 
+
     //Scene 1 Ends When Jack Leaves
-    if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (Game.scene === 1)) {
+    if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (this.scene === 1)) {
      this.jackLeaves(); 
     }
 
     //Scene 2 Ends When Jack sends you to find a rope and a light
-    if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (Game.scene === 2) ) {
-      Game.scene = 3;
+    if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (this.scene === 2) ) {
+      this.scene = 3;
+      localStorage.setItem('scene', '3'); 
       this.updateCharacterLines();
     }
 
@@ -183,8 +199,6 @@ Game.Town.prototype = {
       b1 = ep.getBounds();
       bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
-        console.log('you are in a door going to ' + ep.destination);
-
         if ((ep.destination != 'Well') ||  ((ep.destination === 'Well') && (Game.haveLight === true) && (Game.haveRope === true))) {
           this.game.state.start(ep.destination);
         }

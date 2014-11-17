@@ -13,47 +13,60 @@ Game.Darkness.prototype = {
   create: function() {
 
     Game.camera = {x:0, y:0}
-    // player.create();
+
+    //Get Locally Stored vars
+    this.scene = parseInt(localStorage.getItem('scene'));
+    this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
+    this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
+    
     dialogue.create();
-    // spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
     Game.music.stop();
     dialogue.hidden = true;
   },
   update: function() {
     // player.update();
-    console.log(Game.scene);
-    if (Game.scene === 4) {
-      if (dialogue.hidden) {
-        dialogue.show(this,['','Wake up!','It\'s time to play.','Find the stairs to escape.']); 
-      }
+    console.log(this.scene);
 
-      if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
-        Game.scene = 5;
-        dialogue.hide();
-        this.game.state.start('Well');
-      }
-    }else if (Game.scene === 5) {
-      if (dialogue.hidden) {
-        console.log('showing dia',Game.scene);
-        dialogue.show(this,['','Not what you expected right?','You died, you know.','You fell, just like me.','Don\'t you want to stay and play?']); 
-      }
+    switch(this.scene) {
+      case 4:
+        if (dialogue.hidden) {
+          dialogue.show(this,['','...','Wake up!','It\'s time to play.','Get to the stairs, if you want to go.']); 
+        }
 
-      if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
-        Game.scene = 6;
-        dialogue.hide();
-        this.game.state.start('Well');
-      }
-    }else if (Game.scene === 6) {
-      if (dialogue.hidden) {
-        console.log('showing dia',Game.scene);
-        dialogue.show(this,['','Wake up!','Wake up son! Wake up!']); 
-      }
+        if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
+          this.scene = 5;
+          localStorage.setItem('scene', '5'); 
+          dialogue.hide();
+          this.game.state.start('Well');
+        }
+        break;
+      case 5:
+        if (dialogue.hidden) {
+          console.log('showing dia',this.scene);
+          dialogue.show(this,['','Not what you expected right?','You died, you know.','You fell, just like me.','There\'s no way out.  Not really.']); 
+        }
 
-      if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
-        Game.scene = 7;
-        dialogue.hide();
-        this.game.state.start('MyHouse');
-      }
+        if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
+          this.scene = 6;
+          localStorage.setItem('scene', '6'); 
+          dialogue.hide();
+          this.game.state.start('Well');
+        }
+        break;
+      case 6:
+        if (dialogue.hidden) {
+          console.log('showing dia',this.scene);
+          dialogue.show(this,['','Wake up!','Wake up son! Wake up!']); 
+        }
+
+        if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
+          this.scene = 7;
+          localStorage.setItem('scene', '7'); 
+          dialogue.hide();
+          dialogue.hidden = true;
+          this.game.state.start('MyHouse');
+        }
     }
 
   },

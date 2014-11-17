@@ -14,6 +14,11 @@ Game.Gramps.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
 
+    //Get Locally Stored vars
+    this.scene = parseInt(localStorage.getItem('scene'));
+    this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
+    this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
+
     this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
 
     Game.camera = {x:0, y:1};
@@ -63,8 +68,8 @@ Game.Gramps.prototype = {
 
     // Load NPCs 
     this.npcs = this.game.add.group();
-    if (Game.scene === 3) {
-      if (Game.haveRope === false) {
+    if (this.scene === 3) {
+      if (this.haveRope === false) {
         this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 
         this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*You take the rope.',false));
       }else {
@@ -105,9 +110,10 @@ Game.Gramps.prototype = {
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
-        if ((npc.key === 'furniture') && (Game.haveRope === false)) {
+        if ((npc.key === 'furniture') && (this.haveRope === false)) {
           if (npc.interact() === true) {
-            Game.haveRope = true;
+            this.haveRope = true;
+            localStorage.setItem('haveRope', true); 
             npc.script = ['','You already have the rope.'];
           }
         }else {

@@ -14,6 +14,11 @@ Game.MyHouse.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
 
+    //Get Locally Stored vars
+    this.scene = parseInt(localStorage.getItem('scene'));
+    this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
+    this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
+
     this.game.physics.p2.setBoundsToWorld(true, true, true, true, false);
 
     Game.camera = {x:0, y:1};
@@ -64,23 +69,23 @@ Game.MyHouse.prototype = {
                    'clara': {7: '*Why did you go down there?*Because of your imaginary friend.*He told you to, didn\'t he?'},
                  }
 
-    if (Game.scene < 3) {
-      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines['dad'][Game.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 6, this.lines['gramps'][Game.scene] )); 
-    }else if (Game.scene === 3) {
-      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines['dad'][Game.scene] )); 
-      if (Game.haveLight === false) {
+    if (this.scene < 3) {
+      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines['dad'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 6, this.lines['gramps'][this.scene] )); 
+    }else if (this.scene === 3) {
+      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines['dad'][this.scene] )); 
+      if (this.haveLamp === false) {
         this.npcs.add(new Npc(this.game,tileSize*7,tileSize*12,'furniture',4,'*You take the lamp.',false));
       }else {
         this.npcs.add(new Npc(this.game,tileSize*7,tileSize*12,'furniture',4,'*You already have the lamp.',false));
       }
-    }else if (Game.scene === 4) {
-      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines['dad'][Game.scene] )); 
-    }else if (Game.scene === 7) {
-      this.npcs.add(new Npc(this.game,tileSize*4-16, tileSize*3,'dad', 9, this.lines['dad'][Game.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*3, tileSize*5,'mom', 3, this.lines['mom'][Game.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'gramps', 9, this.lines['gramps'][Game.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'clara', 6, this.lines['clara'][Game.scene] )); 
+    }else if (this.scene === 4) {
+      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines['dad'][this.scene] )); 
+    }else if (this.scene === 7) {
+      this.npcs.add(new Npc(this.game,tileSize*4-16, tileSize*3,'dad', 9, this.lines['dad'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*3, tileSize*5,'mom', 3, this.lines['mom'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'gramps', 9, this.lines['gramps'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'clara', 6, this.lines['clara'][this.scene] )); 
     }
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
@@ -91,17 +96,15 @@ Game.MyHouse.prototype = {
     this.map.createFromObjects('objects', 4, 'house',3, true, false, this.exitPoints);
 
     // Initial Player Position by tile
-    if (Game.scene < 7 ) {
+    if (this.scene < 7 ) {
       player.tilex = 8;
       player.tiley = 17;
-      player.create();
-      Game.lastLocation = "MyHouse";
     }else {
       player.tilex = 3;
       player.tiley = 2; 
-      player.create();
-      Game.lastLocation = "MyHouse";
     } 
+    player.create();
+    Game.lastLocation = "MyHouse";
 
     dialogue.create();
 
@@ -123,9 +126,12 @@ Game.MyHouse.prototype = {
 
     if (spaceKey.isDown && dialogue.hidden) {
       this.npcs.forEach(function(npc) {
-        if ((npc.key === 'furniture') && (Game.haveLight === false)) {
+        if ((npc.key === 'furniture') && (this.haveLamp === false)) {
           if (npc.interact()) {
-            Game.haveLight = true;
+            this.haveLamp = true;
+            localStorage.setItem('haveLamp', true); 
+            console.log('im here');
+
             npc.interact();
             npc.script = ['','You already have the lamp.'];
           }

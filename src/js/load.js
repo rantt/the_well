@@ -18,6 +18,12 @@ var Game = {
   camera: {x:0,y:0} 
 };
 
+
+//Setup Local Storage
+localStorage.getItem('scene') || localStorage.setItem('scene', '1'); 
+JSON.parse(localStorage.getItem('haveRope')) || localStorage.setItem('haveRope', false); 
+JSON.parse(localStorage.getItem('haveLamp')) || localStorage.setItem('haveLamp', false); 
+
 Game.Boot = function(game) {
   this.game = game;
 };
