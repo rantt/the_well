@@ -59,9 +59,10 @@ Game.Town.prototype = {
                            3: '*There might be some in the house.*Why don\'t you ask your father.',
                            4: '*There might be some in the house.*Why don\'t you ask your father.'},
                   'jack': {1: '*Hey, wanna play?*Let\'s go to the old well.*Better ask your mom first.',
-                           2: '*Let\'s should go down there.*We\'ll need some stuff though.*Go get some rope and a light.',
+                           2: '*We should go down there.*We\'ll need some stuff though.*Go get some rope and a light.',
                            3: '*We should go down there?*We\'ll need some stuff though.*Go get some rope and a light.',
-                           4: '*Oh, good you got everything!*What are we waiting for?, Let\'s go!'},
+                           4: '*Oh, good you got everything!*What are we waiting for?, Let\'s go!',
+                           7: '*Well, I guess this is it.'},
                   'clara': {1: '*Hi, nice day for skipping!',
                             2: '*Hey, wanna play?*Jack huh? You always play with him.*Nevermind then!',
                             3: '*Rope?*I have skipping rope. Will that work?',
@@ -73,29 +74,31 @@ Game.Town.prototype = {
     this.physics.p2.convertTilemap(this.map, this.layer2);
 
     //Add Mom
-    this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, this.lines['mom'][Game.scene] )); 
 
     if ((Game.haveRope) && (Game.haveLight)) {
       Game.scene = 4;
     }
     
     //Add Jack
-    if (Game.scene === 1) {
+    if ((Game.scene === 1) || (Game.scene === 7)) {
       this.jack = new Npc(this.game,tileSize*10, tileSize*7,'jack', 9, this.lines['jack'][Game.scene]);
     }else {
       this.jack = new Npc(this.game,tileSize*6, tileSize*15,'jack', 9, this.lines['jack'][Game.scene]);
     }
 
-    //Add Clara
-    this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, this.lines['clara'][Game.scene]);
+    if (Game.scene !== 7 ) {
+      this.npcs.add(new Npc(this.game,tileSize*9, tileSize*3,'mom', 0, this.lines['mom'][Game.scene] )); 
 
-    //Add NPC Animations
+      //Add Clara
+      this.clara = new Npc(this.game,tileSize*16, tileSize*6,'clara', 0, this.lines['clara'][Game.scene]);
+      this.clara.animations.add('skipping',[12,13,14],6,true);        
+      this.clara.animations.play('skipping');
+
+      // Add NPCs to group
+      this.npcs.add(this.clara); 
+    }
+
     this.jack.animations.add('right', [7,8],6,true);
-    this.clara.animations.add('skipping',[12,13,14],6,true);        
-    this.clara.animations.play('skipping');
-
-    // Add NPCs to group
-    this.npcs.add(this.clara); 
     this.npcs.add(this.jack); 
 
     this.exitPoints = this.game.add.group();

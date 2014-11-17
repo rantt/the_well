@@ -35,7 +35,7 @@ Game.Darkness.prototype = {
     }else if (Game.scene === 5) {
       if (dialogue.hidden) {
         console.log('showing dia',Game.scene);
-        dialogue.show(this,['','You died, you know.','You fell, just like me.','Don\'t you want to stay and play?']); 
+        dialogue.show(this,['','Not what you expected right?','You died, you know.','You fell, just like me.','Don\'t you want to stay and play?']); 
       }
 
       if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
@@ -46,7 +46,7 @@ Game.Darkness.prototype = {
     }else if (Game.scene === 6) {
       if (dialogue.hidden) {
         console.log('showing dia',Game.scene);
-        dialogue.show(this,['','Wake up!','Son, please wake up!']); 
+        dialogue.show(this,['','Wake up!','Wake up son! Wake up!']); 
       }
 
       if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {

@@ -38,7 +38,7 @@ var Npc = function(game,x,y,name,startFrame,script,facing) {
 
 Npc.prototype = Object.create(Phaser.Sprite.prototype);
 Npc.prototype.interact = function() {
-   if (lineDistance(player.sprite, this) < 96){
+   if (lineDistance(player.sprite, this) < 72){
      yDiff = this.y - player.sprite.y;
      xDiff = this.x - player.sprite.x;
 

@@ -48,7 +48,6 @@ Game.MyHouse.prototype = {
 
     this.map.setCollision(27, true, 'layer2'); //end table
     
-
     // Load NPCs 
     this.npcs = this.game.add.group();
 
@@ -56,9 +55,13 @@ Game.MyHouse.prototype = {
                    'dad': {1: '*Hi, son.*What are you up to?',
                            2: '*Hi, son.*What are you up to?',
                            3: '*Might be a lamp in the kitchen.*You should check the drawers.',
-                           4: '*Be careful with that lamp.'},
+                           4: '*Be careful with that lamp.',
+                           7: '*Welcome back son.*Thought we lost you there.'},
                    'gramps':  {1: '*Hey kiddo.*What can I do for you.',
-                               2: '*You\'re playing with Jack?*Who\'s Jack?'}
+                               2: '*You\'re playing with Jack?*Who\'s Jack?',
+                               7: '*The fall should\'ve killed you.*There was another body down there.*Been there a while,it broke your fall.'},
+                   'mom': {7: '*You\'re okay now honey.'},                     
+                   'clara': {7: '*Why did you go down there?*Because of your imaginary friend.*He told you to, didn\'t he?'},
                  }
 
     if (Game.scene < 3) {
@@ -73,6 +76,11 @@ Game.MyHouse.prototype = {
       }
     }else if (Game.scene === 4) {
       this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines['dad'][Game.scene] )); 
+    }else if (Game.scene === 7) {
+      this.npcs.add(new Npc(this.game,tileSize*4-16, tileSize*3,'dad', 9, this.lines['dad'][Game.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*3, tileSize*5,'mom', 3, this.lines['mom'][Game.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'gramps', 9, this.lines['gramps'][Game.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'clara', 6, this.lines['clara'][Game.scene] )); 
     }
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
@@ -83,11 +91,18 @@ Game.MyHouse.prototype = {
     this.map.createFromObjects('objects', 4, 'house',3, true, false, this.exitPoints);
 
     // Initial Player Position by tile
-    player.tilex = 8;
-    player.tiley = 17
-    player.create();
-    Game.lastLocation = "MyHouse";
-    
+    if (Game.scene < 7 ) {
+      player.tilex = 8;
+      player.tiley = 17;
+      player.create();
+      Game.lastLocation = "MyHouse";
+    }else {
+      player.tilex = 3;
+      player.tiley = 2; 
+      player.create();
+      Game.lastLocation = "MyHouse";
+    } 
+
     dialogue.create();
 
     // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
