@@ -4,13 +4,10 @@ function rand (min, max) {
 }
 
 var map = [];
-// var rooms = [];
-// var dWall = 0;
 var dFloor = 3;
-var map = [];
 
-var dRows = 38;
-var dCols = 50;
+var dRows = 42;
+var dCols = 30;
 
 //Initialize Map
 for (var i = 0; i < dRows; i++) {
@@ -22,7 +19,6 @@ for (var i = 0; i < dRows; i++) {
 
 
 var Room = function(x, y, width, height) {
-  // console.log('room',x,y,width,height);
   this.x = x;
   this.y = y;
   this.width = width;
@@ -158,7 +154,7 @@ Knode.prototype = {
         }
       }
 
-      if(pointB.x < dCols && pointB.y < dRows) {
+      if(pointB.x < 42 && pointB.y < 30) {
        halls.push({x:pointB.x, y:pointB.y});
       } 
 
@@ -194,34 +190,27 @@ Knode.prototype = {
   } 
 };
 
-var Maze = function(game, dCols, dRows) {
-  this.game = game;
+var Maze = function(dCols, dRows) {
   this.dRows = dRows;
   this.dCols = dCols;
   this.roomMin = 3;
   this.roomMax = 9;
-  this.tileSize = 32;
 };
 
 Maze.prototype = {
   create: function() {
-    this.root = new Knode(0,0,dCols,dRows);
+    this.root = new Knode(0,0,this.dCols,this.dRows);
 
     this.nodes = this.traverse(this.root, []);
     this.root.createRooms();
 
   },
   traverse: function(root, nodes) {
-    // var maxLeafSize = 20;
-    var maxLeafSize = 10;
-    // var maxLeafSize = 0;
 
     if (root.leftChild === null && root.rightChild === null) {
-     if (root.width > maxLeafSize || root.height > maxLeafSize) {
        if (root.split()) {
          return this.traverse(root.leftChild, nodes) && this.traverse(root.rightChild, nodes);
        }
-     }
     }
     // root.createRooms();
     nodes.push(root);
@@ -231,18 +220,14 @@ Maze.prototype = {
     var line;
     var result = ''; 
 
-    // var leftTile = 0;
-    // var rightTile = 0;
     var aboveTile = 0;
     var belowTile = 0;
-    for (var i = 0; i < dRows; i++) {
+    console.log('dRows',this.dCols);
+    for (var i = 0; i < this.dRows; i++) {
       line = [];
-      for (var j = 0; j < dCols; j++) {
-        if (map[i][j] === 0) {
+      for (var j = 0; j < this.dCols; j++) {
+        if ((map[i][j] === 0) ||(map[i][j] === undefined)) {
 
-          // leftTile = map[i][j-1] || 0;
-          // rightTile = map[i][j+1] || 0;
-          
           aboveTile = (i > 0) ?  map[i-1][j] : 0;
           belowTile = map[i+1][j] || 0;
 
@@ -262,18 +247,10 @@ Maze.prototype = {
           else {
             line[j] = 0;
           } 
-
-          // if (map[i+1][j] === 3){
-          //   line[j] = 2;
-          // }
-          // else {
-          //   line[j] = 0;
-          // } 
-
-          
         }else{
           line[j] = map[i][j];
         }
+
       }
       result += line.join(',') + '\n';
     }

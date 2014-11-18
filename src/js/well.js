@@ -1,8 +1,5 @@
 /* global Game */
 /* global Maze */
-/* global player */
-/* global tileSize */
-/* global Npc */
 
 //  Lighting effect adapted from http://gamemechanicexplorer.com/#lighting-3 by John Watson (@yafd)
 function lineDistance(point1, point2) {
@@ -31,35 +28,30 @@ Game.Well.prototype = {
     this.game.load.spritesheet('player','assets/images/hero_x64.png',64,64,12);
   },
   create: function() {
-    // Game.music.stop();
-    // Game.music = this.game.add.sound('tomb');
-    // Game.music.volume = 0.5;
-    // Game.music.play('',0,1,true);
 
-    // this.game.world.setBounds(0, 0, Game.w, Game.h);
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
     
     // The radius of the circle of light
     this.LIGHT_RADIUS = 200;
 
     //Twice the Size
-    dCols = 42;
-    dRows = 30;
+    var dCols = 42;
+    var dRows = 30;
    
     //Generate a new maze 
-    dungeon = new Maze(game, dCols, dRows);
-    dungeon.create();
+    var maze = new Maze(dCols, dRows);
+    maze.create();
 
     //Put Player in the first room created
-    starting_room = dungeon.nodes[0].room;
-    lastRoom = dungeon.nodes[dungeon.nodes.length-1].room;
+    var startingRoom = maze.nodes[0].room;
+    var lastRoom = maze.nodes[maze.nodes.length-1].room;
 
     console.log('last room',lastRoom);
     console.log('last room cx',lastRoom.center.x);
     console.log('last room cy',lastRoom.center.y);
 
-    this.game.load.tilemap('level', null, dungeon.drawLevel(), Phaser.Tilemap.CSV );
-    console.log(dungeon.drawLevel());
+    this.game.load.tilemap('level', null, maze.drawLevel(), Phaser.Tilemap.CSV );
+    console.log(maze.drawLevel());
 
     this.map = this.game.add.tilemap('level',64,64);
     this.map.addTilesetImage('tiles');
@@ -82,7 +74,7 @@ Game.Well.prototype = {
     dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
     this.cursor = this.game.input.keyboard.createCursorKeys();
 
-    this.player = this.game.add.sprite(starting_room.center.x*64, starting_room.center.y*64, 'player');
+    this.player = this.game.add.sprite(startingRoom.center.x*64, startingRoom.center.y*64, 'player');
     this.player.anchor.setTo(0.5,0.5);
     this.game.physics.p2.enable(this.player); // set up player physics
     this.player.body.fixedRotation = true; // no rotation
