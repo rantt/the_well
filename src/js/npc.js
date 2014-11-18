@@ -1,4 +1,5 @@
-/*global Game*/
+/*global player*/
+/*global dialogue*/
 
 function lineDistance(point1, point2) {
   var x = 0;
@@ -39,11 +40,11 @@ var Npc = function(game,x,y,name,startFrame,script,facing) {
 Npc.prototype = Object.create(Phaser.Sprite.prototype);
 Npc.prototype.interact = function() {
    if (lineDistance(player.sprite, this) < 72){
-     yDiff = this.y - player.sprite.y;
-     xDiff = this.x - player.sprite.x;
+     var yDiff = this.y - player.sprite.y;
+     var xDiff = this.x - player.sprite.x;
 
      //Face the player
-     if (this.facing == true) {
+     if (this.facing === true) {
        if (Math.abs(xDiff) > Math.abs(yDiff)) {
          if (xDiff > 0) {
            this.frame = this.LEFT;
@@ -65,7 +66,7 @@ Npc.prototype.interact = function() {
       dialogue.show(this,this.script);
       this.spoke = true;
     }else {
-      dialogue.show(this, Array('',this.script[this.script.length-1]));
+      dialogue.show(this, new Array('',this.script[this.script.length-1]));
     }
     return true;
   }else {
