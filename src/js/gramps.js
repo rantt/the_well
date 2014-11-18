@@ -1,10 +1,9 @@
 /*global Game*/
 /*global player*/
 /*global Npc*/
-
-// var musicOn = true;
-
-var spaceKey;
+/*global tileSize*/
+/*global dialogue*/
+/*global spaceKey*/
 
 Game.Gramps = function(game) {
   this.game = game;
@@ -87,21 +86,19 @@ Game.Gramps.prototype = {
 
     // Initial Player Position by tile
     player.tilex = 6;
-    player.tiley = 17
+    player.tiley = 17;
     player.create();
-    Game.lastLocation = "Gramps";
+    Game.lastLocation = 'Gramps';
 
     dialogue.create();
-
-    spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
 
   update: function() {
 
     this.exitPoints.forEach(function(ep) {
-      b1 = ep.getBounds();
-      bp = player.sprite.getBounds();
+      var b1 = ep.getBounds();
+      var bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
         console.log('you are in a door going to ' + ep.destination);
         this.game.state.start(ep.destination);
