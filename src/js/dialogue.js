@@ -1,14 +1,15 @@
 /*global Game*/
+/*global tileSize*/
 
 /* Typing text based on the 'Kern of Duty' example from examples.phaser.io */
 
-Dialogue = function(game) {
+var Dialogue = function(game) {
   this.game = game;
   this.hidden = true; //hide dialogue box on creation
   this.sprite = null;
   this.index = 0;
   this.line = '';
-  this.text;
+  this.text = '';
   this.typing = false;
   this.speaker = null; //the sprite/npc currently speaking
 };
@@ -22,7 +23,7 @@ Dialogue.prototype = {
   create: function() {
     this.sprite = this.game.add.sprite(0,11*64,'textbox'); 
     this.sprite.alpha = 0;
-    this.text = this.game.add.bitmapText(30, 7*64+30, 'minecraftia', '', 30)
+    this.text = this.game.add.bitmapText(30, 7*64+30, 'minecraftia', '', 30);
   },
 
   show: function(speaker, content) {
@@ -53,7 +54,7 @@ Dialogue.prototype = {
   },
 
   hide: function() {
-    if (this.hidden == true) {
+    if (this.hidden === true) {
       return;
     }
 
@@ -66,7 +67,7 @@ Dialogue.prototype = {
     var t = this.game.add.tween(this.sprite).to({x: Game.camera.x*Game.w, y: Game.camera.y*Game.h+11*64}, 250);
     t.start();
     t.onComplete.add(function(){
-      this.hidden = true
+      this.hidden = true;
       this.sprite.alpha = 0;
     }, this);
   },
@@ -98,4 +99,4 @@ Dialogue.prototype = {
           this.game.time.events.add(Phaser.Timer.SECOND, this.nextLine, this);
       }
   }
-}
+};
