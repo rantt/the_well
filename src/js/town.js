@@ -150,7 +150,7 @@ Game.Town.prototype = {
     },this);
     this.updating = false;
   },
-  jackLeaves: function() {
+  jackLeaves: function(scene) {
     //Jack Walks off and goes to the well
     if (this.tweening) {
       return;
@@ -160,7 +160,7 @@ Game.Town.prototype = {
     var t = this.game.add.tween(this.jack.body).to({x: this.jack.body.x+256}, 1000);
     t.start();
     t.onComplete.add(function() {
-      this.scene = 2;
+      this.scene = scene;
       localStorage.setItem('scene', '2'); 
       this.tweening = false;
       this.jack.body.x = tileSize*5-32; 
@@ -182,14 +182,14 @@ Game.Town.prototype = {
       }
     }else{
       if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden)) {
-        this.jackLeaves();    
+        this.jackLeaves(7);
       }
     }
 
 
     //Scene 1 Ends When Jack Leaves
     if ((this.jack.spoke === true) && (!dialogue.typing) && (dialogue.hidden) && (this.scene === 1)) {
-     this.jackLeaves(); 
+     this.jackLeaves(2); 
     }
 
     //Scene 2 Ends When Jack sends you to find a rope and a light
