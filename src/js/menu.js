@@ -7,7 +7,6 @@ Game.Menu.prototype =  {
     create: function() {
 
         this.title = this.game.add.sprite(Game.w/2,Game.h/2,'title');
-        console.log(Game.w/2+' '+Game.h/2);
         this.title.anchor.setTo(0.5,0.5);
 
         // this.instructions = this.game.add.sprite(Game.w/2,200,'instructions');
