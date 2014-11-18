@@ -1,12 +1,13 @@
 /*global Game*/
 /*global tileSize*/
+/*global dialogue*/
 
 var wKey;
 var aKey;
 var sKey;
 var dKey;
 
-Player = function(game) {
+var Player = function(game) {
   this.game = game;
   this.sprite = null;
   this.alive = true;
@@ -63,19 +64,19 @@ Player.prototype = {
     var speed = 700;
     var toMove = false;
 
-    if (player.sprite.y > this.game.camera.y + Game.h) {
+    if (this.sprite.y > this.game.camera.y + Game.h) {
       Game.camera.y += 1;
       toMove = true;
     }
-    else if (player.sprite.y < this.game.camera.y) {
+    else if (this.sprite.y < this.game.camera.y) {
       Game.camera.y -= 1;
       toMove = true;
     }
-    else if (player.sprite.x > this.game.camera.x + Game.w) {
+    else if (this.sprite.x > this.game.camera.x + Game.w) {
       Game.camera.x += 1;
       toMove = true;
     }
-    else if (player.sprite.x < this.game.camera.x) {
+    else if (this.sprite.x < this.game.camera.x) {
       Game.camera.x -= 1;
       toMove = true;
     }

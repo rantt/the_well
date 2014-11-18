@@ -5,9 +5,6 @@
 /*global dialogue*/
 /*global spaceKey*/
 
-// var musicOn = true;
-
-
 Game.Town = function(game) {
   this.game = game;
 };

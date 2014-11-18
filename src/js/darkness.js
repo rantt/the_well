@@ -1,6 +1,6 @@
 /*global Game*/
-/*global player*/
-/*global Npc*/
+/*global dialogue*/
+/*global spaceKey*/
 
 Game.Darkness = function(game) {
   this.game = game;
@@ -12,20 +12,26 @@ Game.Darkness.prototype = {
   },
   create: function() {
 
-    Game.camera = {x:0, y:0}
+    Game.camera = {x:0, y:0};
 
     //Get Locally Stored vars
     this.scene = parseInt(localStorage.getItem('scene'));
     this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
     this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
+
+    Game.music.stop();
+    Game.music = this.game.add.sound('tomb');
+    Game.music.volume = 0.5;
+    Game.music.play('',0,1,true);
     
     dialogue.create();
 
-    Game.music.stop();
     dialogue.hidden = true;
+
+    this.restartText = this.game.add.bitmapText(Game.w/2, Game.h/2-200, 'minecraftia','',21);
+    this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2 - 175;
   },
   update: function() {
-    // player.update();
     console.log(this.scene);
 
     switch(this.scene) {
@@ -65,9 +71,35 @@ Game.Darkness.prototype = {
           localStorage.setItem('scene', '7'); 
           dialogue.hide();
           dialogue.hidden = true;
-          this.game.state.start('MyHouse');
+          this.game.state.start('MyHouseMaybe');
         }
+        break;
+      case 7:
+        if (dialogue.hidden) {
+          console.log('showing dia',this.scene);
+          dialogue.show(this,['','There\'s no way out.','Not really...','THE END.']); 
+        }
+
+        if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
+          var msg =  'You survived... or did you?' + '\n';
+          msg += '~Share on twitter!~\n';
+          this.restartText.setText(msg);
+          this.restartText.visible = true;
+
+          this.twitterButton = this.game.add.button(Game.w/2, Game.h/2-100,'twitter', this.twitter, this);
+          this.twitterButton.anchor.setTo(0.5,0.5);
+          this.twitterButton.fixedToCamera = true;
+
+          //Reset the World
+          localStorage.setItem('scene', '1'); 
+          localStorage.setItem('haveLamp', false); 
+          localStorage.setItem('haveRope', false); 
+        }
+
     }
 
   },
-}
+  twitter: function() {
+    window.open('http://twitter.com/share?text=I+escaped+The+Well!+See+if+you+can+make+it+out+at&via=rantt_&url=http://www.divideby5.com/games/the_well/', '_blank');
+  },
+};

@@ -5,7 +5,6 @@
 /*global dialogue*/
 /*global spaceKey*/
 
-
 Game.MyHouse = function(game) {
   this.game = game;
 };
