@@ -61,43 +61,44 @@ module.exports = (grunt) ->
           force: true
           jshintrc: '.jshintrc'
           ignores: ['<%= SRC_DIR %>/js/lib/**/*.js']
-        src: ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/play.js','<%= SRC_DIR %>/js/game.js']
+        src: ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/player.js','<%= SRC_DIR %>/js/maze.js','<%= SRC_DIR %>/js/npc.js','<%= SRC_DIR %>/js/dialogue.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/town.js','<%= SRC_DIR %>/js/myhouse.js','<%= SRC_DIR %>/js/myhouse_maybe.js','<%= SRC_DIR %>/js/gramps.js','<%= SRC_DIR %>/js/well.js','<%= SRC_DIR %>/js/darkness.js','<%= SRC_DIR %>/js/game.js']
+
 
 
     uglify:
       dist:
         files:
-          '<%= DST_FILE %>.min.js': ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/play.js','<%= SRC_DIR %>/js/game.js']
+          '<%= DST_FILE %>.min.js': ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/player.js','<%= SRC_DIR %>/js/maze.js','<%= SRC_DIR %>/js/npc.js','<%= SRC_DIR %>/js/dialogue.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/town.js','<%= SRC_DIR %>/js/myhouse.js','<%= SRC_DIR %>/js/myhouse_maybe.js','<%= SRC_DIR %>/js/gramps.js','<%= SRC_DIR %>/js/well.js','<%= SRC_DIR %>/js/darkness.js','<%= SRC_DIR %>/js/game.js']
 
       options:
         banner: '/*! <%= PKG.name %> v<%= PKG.version %> */\n'
 
-    # jsonmin:
-    #   stripAll:
-    #     options:
-    #       stripWhitespace: true
-    #       stripComments: true
+    jsonmin:
+      stripAll:
+        options:
+          stripWhitespace: true
+          stripComments: true
 
-    #     files:
-    #       '<%= DST_DIR %>/levels/level1.json':  '<%= SRC_DIR %>/levels/level1.json'
-    #       '<%= DST_DIR %>/levels/level2.json':  '<%= SRC_DIR %>/levels/level2.json'
-    #       '<%= DST_DIR %>/levels/level3.json':  '<%= SRC_DIR %>/levels/level3.json'
+        files:
+          '<%= DST_DIR %>/maps/gramps.json':  '<%= SRC_DIR %>/maps/gramps.json'
+          '<%= DST_DIR %>/maps/myhouse.json':  '<%= SRC_DIR %>/maps/myhouse.json'
+          '<%= DST_DIR %>/maps/town.json':  '<%= SRC_DIR %>/maps/town.json'
 
 
     imagemin:
       png:
         options:
           optimizationLevel: 7
-    
+
         files: [
-          
+
           # Set to true to enable the following options…
           expand: true
-          
+
           # cwd is 'current working directory'
           cwd: "<%= SRC_DIR %>/assets/images/"
           src: ["**/*.png"]
-          
+
           # Could also match cwd line above. i.e. project-directory/img/
           dest: "<%= DST_DIR %>/assets/images/"
           ext: ".png"
@@ -160,7 +161,7 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-connect'
   @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-contrib-uglify'
-  # @loadNpmTasks 'grunt-jsonmin'
+  @loadNpmTasks 'grunt-jsonmin'
   @loadNpmTasks 'grunt-contrib-imagemin'
   @loadNpmTasks 'grunt-contrib-cssmin'
   @loadNpmTasks 'grunt-contrib-htmlmin'
@@ -170,7 +171,7 @@ module.exports = (grunt) ->
 
 
   # 'htmlmin' and 'jsonmin' are also available options
-  @registerTask 'dist', ['clean', 'jshint', 'uglify',
+  @registerTask 'dist', ['clean', 'jshint', 'uglify','jsonmin',
                          'imagemin', 'cssmin', 'copy', 'processhtml']
   @registerTask 'server',  ['jshint', 'connect', 'watch']
   @registerTask 'update', ['curl-dir']

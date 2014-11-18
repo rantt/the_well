@@ -1,5 +1,5 @@
 /* global Game */
-/* global Dungeon */
+/* global Maze */
 /* global player */
 /* global tileSize */
 /* global Npc */
@@ -31,10 +31,10 @@ Game.Well.prototype = {
     this.game.load.spritesheet('player','assets/images/hero_x64.png',64,64,12);
   },
   create: function() {
-    Game.music.stop();
-    Game.music = this.game.add.sound('tomb');
-    Game.music.volume = 0.5;
-    Game.music.play('',0,1,true);
+    // Game.music.stop();
+    // Game.music = this.game.add.sound('tomb');
+    // Game.music.volume = 0.5;
+    // Game.music.play('',0,1,true);
 
     // this.game.world.setBounds(0, 0, Game.w, Game.h);
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
@@ -47,7 +47,7 @@ Game.Well.prototype = {
     dRows = 30;
    
     //Generate a new maze 
-    dungeon = new Dungeon(game, dCols, dRows);
+    dungeon = new Maze(game, dCols, dRows);
     dungeon.create();
 
     //Put Player in the first room created
@@ -211,13 +211,4 @@ Game.Well.prototype = {
       }
     } 
   },
-  render: function() {
-    this.stairs.body.debug = true;
-  }
-  // render: function() {
-  //   this.game.debug.text('worldx: '+ this.game.world.x+' worldy: '+this.game.world.y, 64, 64);
-  //   this.player.body.debug = true;
-  //   this.game.debug.text('world x:' + this.game.width + ' world y:' + this.game.height , 32, 32);
-  //   this.game.debug.text('Player pos x: ' + this.player.body.x + ' y: ' + this.player.body.y, 32, 96);
-  // },    
 };
