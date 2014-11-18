@@ -1,10 +1,10 @@
 /*global Game*/
 /*global player*/
 /*global Npc*/
+/*global tileSize*/
+/*global dialogue*/
+/*global spaceKey*/
 
-// var musicOn = true;
-
-var spaceKey;
 
 Game.MyHouse = function(game) {
   this.game = game;
@@ -57,35 +57,35 @@ Game.MyHouse.prototype = {
     this.npcs = this.game.add.group();
 
     this.lines = {
-                   'dad': {1: '*Hi, son.*What are you up to?',
+                   dad: {1: '*Hi, son.*What are you up to?',
                            2: '*Hi, son.*What are you up to?',
                            3: '*Might be a lamp in the kitchen.*You should check the drawers.',
                            4: '*Be careful with that lamp.',
                            7: '*Welcome back son.*Thought we lost you there.'},
-                   'gramps':  {1: '*Hey kiddo.*What can I do for you.',
+                   gramps:  {1: '*Hey kiddo.*What can I do for you.',
                                2: '*You\'re playing with Jack?*Who\'s Jack?',
                                7: '*The fall should\'ve killed you.*There was another body down there.*Been there a while,it broke your fall.'},
-                   'mom': {7: '*You\'re okay now honey.'},                     
-                   'clara': {7: '*Why did you go down there?*Because of your imaginary friend.*He told you to, didn\'t he?'},
-                 }
+                   mom: {7: '*You\'re okay now honey.'},                     
+                   clara: {7: '*Why did you go down there?*Because of your imaginary friend.*He told you to, didn\'t he?'},
+                 };
 
     if (this.scene < 3) {
-      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines['dad'][this.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 6, this.lines['gramps'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'dad', 9, this.lines.dad[this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 6, this.lines.gramps[this.scene] )); 
     }else if (this.scene === 3) {
-      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines['dad'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines.dad[this.scene] )); 
       if (this.haveLamp === false) {
         this.npcs.add(new Npc(this.game,tileSize*7,tileSize*12,'furniture',4,'*You take the lamp.',false));
       }else {
         this.npcs.add(new Npc(this.game,tileSize*7,tileSize*12,'furniture',4,'*You already have the lamp.',false));
       }
     }else if (this.scene === 4) {
-      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines['dad'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*10, tileSize*13,'dad', 3, this.lines.dad[this.scene] )); 
     }else if (this.scene === 7) {
-      this.npcs.add(new Npc(this.game,tileSize*4-16, tileSize*3,'dad', 9, this.lines['dad'][this.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*3, tileSize*5,'mom', 3, this.lines['mom'][this.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'gramps', 9, this.lines['gramps'][this.scene] )); 
-      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'clara', 6, this.lines['clara'][this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*4-16, tileSize*3,'dad', 9, this.lines.dad[this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*3, tileSize*5,'mom', 3, this.lines.mom[this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*5-16, tileSize*15-16,'gramps', 9, this.lines.gramps[this.scene] )); 
+      this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'clara', 6, this.lines.clara[this.scene] )); 
     }
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
@@ -104,20 +104,17 @@ Game.MyHouse.prototype = {
       player.tiley = 2; 
     } 
     player.create();
-    Game.lastLocation = "MyHouse";
+    Game.lastLocation = 'MyHouse';
 
     dialogue.create();
-
-    // muteKey = game.input.keyboard.addKey(Phaser.Keyboard.M);
-    spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
   },
 
   update: function() {
 
     this.exitPoints.forEach(function(ep) {
-      b1 = ep.getBounds();
-      bp = player.sprite.getBounds();
+      var b1 = ep.getBounds();
+      var bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
         console.log('you are in a door going to ' + ep.destination);
         this.game.state.start(ep.destination);
