@@ -53,8 +53,6 @@ Game.Load = function(game) {
 Game.Load.prototype = {
   preload: function() {
     
-    //Debug Plugin    
-    this.game.add.plugin(Phaser.Plugin.Debug);
 
     //Loading Screen Message/bar
     // var loadingText = this.game.add.bitmapText(Game.w, Game.h, 'minecraftia', 'Loading...', 21);

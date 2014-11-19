@@ -46,13 +46,20 @@ module.exports = (grunt) ->
           src: ['**']
           dest: '<%= DST_DIR %>/assets/audio/'
         ]
+      libs:
+        files: [
+          expand: true
+          flatten: false
+          cwd: '<%= SRC_DIR %>/js/libs/'
+          src: ['**']
+          dest: '<%= DST_DIR %>/js/libs/'
+        ]
       index:
         files: [
           src: ['<%= SRC_DIR %>/<%= INDEX_FILE %>]']
           expand: false
           flatten: true
           dest: '<%= DST_DIR %>/<%= INDEX_FILE %>'
-
         ]
 
     jshint:
@@ -68,20 +75,7 @@ module.exports = (grunt) ->
     uglify:
       dist:
         files:
-          '<%= DST_DIR %>/js/lib/phaser.min.js': '<%= SRC_DIR %>/js/lib/phaser.min.js',
-          '<%= DST_DIR %>/js/player.js': '<%= SRC_DIR %>/js/player.js',
-          '<%= DST_DIR %>/js/maze.js': '<%= SRC_DIR %>/js/maze.js',
-          '<%= DST_DIR %>/js/npc.js': '<%= SRC_DIR %>/js/npc.js',
-          '<%= DST_DIR %>/js/dialogue.js': '<%= SRC_DIR %>/js/dialogue.js',
-          '<%= DST_DIR %>/js/load.js': '<%= SRC_DIR %>/js/load.js',
-          '<%= DST_DIR %>/js/menu.js': '<%= SRC_DIR %>/js/menu.js',
-          '<%= DST_DIR %>/js/town.js': '<%= SRC_DIR %>/js/town.js',
-          '<%= DST_DIR %>/js/myhouse.js': '<%= SRC_DIR %>/js/myhouse.js',
-          '<%= DST_DIR %>/js/myhouse_maybe.js': '<%= SRC_DIR %>/js/myhouse_maybe.js',
-          '<%= DST_DIR %>/js/gramps.js': '<%= SRC_DIR %>/js/gramps.js',
-          '<%= DST_DIR %>/js/well.js': '<%= SRC_DIR %>/js/well.js',
-          '<%= DST_DIR %>/js/darkness.js': '<%= SRC_DIR %>/js/darkness.js',
-          '<%= DST_DIR %>/js/game.js': '<%= SRC_DIR %>/js/game.js'
+          '<%= DST_FILE %>.min.js': ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/player.js','<%= SRC_DIR %>/js/maze.js','<%= SRC_DIR %>/js/npc.js','<%= SRC_DIR %>/js/dialogue.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/town.js','<%= SRC_DIR %>/js/myhouse.js','<%= SRC_DIR %>/js/myhouse_maybe.js','<%= SRC_DIR %>/js/gramps.js','<%= SRC_DIR %>/js/well.js','<%= SRC_DIR %>/js/darkness.js','<%= SRC_DIR %>/js/game.js']
 
       options:
         banner: '/*! <%= PKG.name %> v<%= PKG.version %> */\n'

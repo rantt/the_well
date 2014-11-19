@@ -75,6 +75,8 @@ Game.Gramps.prototype = {
         this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Oh, I might have some rope.*Check the closet by the bedroom.' )); 
         this.npcs.add(new Npc(this.game,tileSize*2,tileSize*3,'furniture',4,'*You already have the rope.',false));
       }
+    }else if (this.scene > 4) {
+        this.npcs.add(new Npc(this.game,tileSize*2+16, tileSize*15-16,'gramps', 0, '*Hey Kiddo.*Keeping out of trouble?' )); 
     }
 
     this.physics.p2.convertTilemap(this.map, this.layer1);
