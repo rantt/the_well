@@ -95,10 +95,6 @@ Player.prototype = {
     this.sprite.body.velocity.x = 0;
     this.sprite.body.velocity.y = 0;
 
-    if (!this.sprite.alive){
-      return;
-    }
-
     var speed = 275;
 
     if (this.tweening) {
@@ -106,28 +102,26 @@ Player.prototype = {
       this.sprite.body.velocity.x = 0;
       this.sprite.body.velocity.y = 0;
     }else{
-      if (dialogue.hidden) {
-        //Don't move when the dialogue box is visible
-        if (this.cursor.left.isDown || aKey.isDown) {
-          this.sprite.body.velocity.x = -speed;
-          this.sprite.direction = 'left';
-          this.sprite.animations.play('left');
-        }
-        else if (this.cursor.right.isDown || dKey.isDown) {
-          this.sprite.body.velocity.x = speed;
-          this.sprite.direction = 'right';
-          this.sprite.animations.play('right');
-        }
-        else if (this.cursor.up.isDown || wKey.isDown) {
-          this.sprite.body.velocity.y = -speed;
-          this.sprite.direction = 'up';
-          this.sprite.animations.play('up');
-        }
-        else if (this.cursor.down.isDown || sKey.isDown) {
-          this.sprite.body.velocity.y = speed;
-          this.sprite.direction = 'down';
-          this.sprite.animations.play('down');
-        }
+      //Don't move when the dialogue box is visible
+      if ((dialogue.hidden) && (this.cursor.left.isDown || aKey.isDown)) {
+        this.sprite.body.velocity.x = -speed;
+        this.sprite.direction = 'left';
+        this.sprite.animations.play('left');
+      }
+      else if ((dialogue.hidden) && (this.cursor.right.isDown || dKey.isDown)) {
+        this.sprite.body.velocity.x = speed;
+        this.sprite.direction = 'right';
+        this.sprite.animations.play('right');
+      }
+      else if ((dialogue.hidden) && (this.cursor.up.isDown || wKey.isDown)) {
+        this.sprite.body.velocity.y = -speed;
+        this.sprite.direction = 'up';
+        this.sprite.animations.play('up');
+      }
+      else if ((dialogue.hidden) && (this.cursor.down.isDown || sKey.isDown)) {
+        this.sprite.body.velocity.y = speed;
+        this.sprite.direction = 'down';
+        this.sprite.animations.play('down');
       }
       else {
         if (this.sprite.direction === 'up') {
