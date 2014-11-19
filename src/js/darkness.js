@@ -22,13 +22,14 @@ Game.Darkness.prototype = {
     if (this.scene < 6) {
       this.jack = this.game.add.sprite(Game.w/2-32, Game.h/2-32, 'jack');
       this.jack.frame = 12;
+
+      Game.music.stop();
+      Game.music = this.game.add.sound('tomb');
+      Game.music.volume = 0.5;
+      Game.music.play('',0,1,true);
     }
   this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
 
-    Game.music.stop();
-    Game.music = this.game.add.sound('tomb');
-    Game.music.volume = 0.5;
-    Game.music.play('',0,1,true);
     
     dialogue.create();
 
@@ -42,7 +43,7 @@ Game.Darkness.prototype = {
     switch(this.scene) {
       case 4:
         if (dialogue.hidden) {
-          dialogue.show(this,['','...','Wake up!','It\'s time to play.','Get to the stairs, if you want to go.']); 
+          dialogue.show(this,['','...','Wake up!','It\'s time to play.','Get to the stairs, if you can.']); 
         }
 
         if (spaceKey.isDown && !dialogue.typing && !dialogue.hidden) {
