@@ -2,6 +2,8 @@
 
 ### Game 5
 
+![the well](screenshots/the_well_npcs.gif)
+
 This game is for the onegameamonth.com (#1GAM) challenge.  The theme is death and I decided to try to do an RPG along that theme.
 
 Developed using [Phaser.js](http://phaser.io)
