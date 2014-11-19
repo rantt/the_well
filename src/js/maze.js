@@ -224,7 +224,6 @@ Maze.prototype = {
 
     var aboveTile = 0;
     var belowTile = 0;
-    console.log('dRows',this.dCols);
     for (var i = 0; i < this.dRows; i++) {
       line = [];
       for (var j = 0; j < this.dCols; j++) {

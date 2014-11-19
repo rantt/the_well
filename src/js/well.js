@@ -46,12 +46,7 @@ Game.Well.prototype = {
     var startingRoom = maze.nodes[0].room;
     var lastRoom = maze.nodes[maze.nodes.length-1].room;
 
-    console.log('last room',lastRoom);
-    console.log('last room cx',lastRoom.center.x);
-    console.log('last room cy',lastRoom.center.y);
-
     this.game.load.tilemap('level', null, maze.drawLevel(), Phaser.Tilemap.CSV );
-    console.log(maze.drawLevel());
 
     this.map = this.game.add.tilemap('level',64,64);
     this.map.addTilesetImage('tiles');

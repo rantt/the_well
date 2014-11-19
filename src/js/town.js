@@ -14,7 +14,6 @@ Game.Town.prototype = {
     this.scene = parseInt(localStorage.getItem('scene'));
     this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
     this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
-    console.log('scene',this.scene);
   },
   create: function() {
     this.game.physics.startSystem(Phaser.Physics.P2JS); // start the physics
@@ -203,7 +202,6 @@ Game.Town.prototype = {
       var b1 = ep.getBounds();
       var bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
-        console.log(ep.destination);
         if ((ep.destination !== 'Darkness') ||  ((ep.destination === 'Darkness') && (this.haveLamp === true) && (this.haveRope === true))) {
           this.game.state.start(ep.destination);
         }

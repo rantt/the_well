@@ -115,7 +115,6 @@ Game.MyHouse.prototype = {
       var b1 = ep.getBounds();
       var bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
-        console.log('you are in a door going to ' + ep.destination);
         this.game.state.start(ep.destination);
       }
     }, this);
@@ -126,7 +125,6 @@ Game.MyHouse.prototype = {
           if (npc.interact()) {
             this.haveLamp = true;
             localStorage.setItem('haveLamp', true); 
-            console.log('im here');
 
             npc.interact();
             npc.script = ['','You already have the lamp.'];

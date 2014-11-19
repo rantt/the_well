@@ -99,7 +99,6 @@ Game.MyHouseMaybe.prototype = {
       var b1 = ep.getBounds();
       var bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
-        console.log('you are in a door going to ' + ep.destination);
         this.game.state.start('Darkness');
         // this.game.state.start(ep.destination);
       }

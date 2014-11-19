@@ -6,15 +6,15 @@ Game.Menu = function(game){
 Game.Menu.prototype =  {
     create: function() {
 
-        this.title = this.game.add.sprite(Game.w/2,Game.h/2,'title');
+        this.title = this.game.add.sprite(Game.w/2,Game.h/2-100,'title');
         this.title.anchor.setTo(0.5,0.5);
 
-        // this.instructions = this.game.add.sprite(Game.w/2,200,'instructions');
-        // this.instructions.scale.x = 0.5;
-        // this.instructions.scale.y = 0.5;
+        this.instructions = this.game.add.sprite(Game.w/2-100,400,'instructions');
+        this.instructions.scale.x = 0.5;
+        this.instructions.scale.y = 0.5;
 
         // Start Message
-        // var loadingText = this.game.add.bitmapText(Game.w, Game.h, 'minecraftia', '=click to start=', 30);
+        var loadingText = this.game.add.bitmapText(Game.w, Game.h, 'minecraftia', '=click to start=', 30);
     },
     update: function() {
       //Click to Start
