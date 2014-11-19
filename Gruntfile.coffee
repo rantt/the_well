@@ -68,7 +68,20 @@ module.exports = (grunt) ->
     uglify:
       dist:
         files:
-          '<%= DST_FILE %>.min.js': ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/player.js','<%= SRC_DIR %>/js/maze.js','<%= SRC_DIR %>/js/npc.js','<%= SRC_DIR %>/js/dialogue.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/town.js','<%= SRC_DIR %>/js/myhouse.js','<%= SRC_DIR %>/js/myhouse_maybe.js','<%= SRC_DIR %>/js/gramps.js','<%= SRC_DIR %>/js/well.js','<%= SRC_DIR %>/js/darkness.js','<%= SRC_DIR %>/js/game.js']
+          '<%= DST_DIR %>/js/lib/phaser.min.js': '<%= SRC_DIR %>/js/lib/phaser.min.js',
+          '<%= DST_DIR %>/js/player.js': '<%= SRC_DIR %>/js/player.js',
+          '<%= DST_DIR %>/js/maze.js': '<%= SRC_DIR %>/js/maze.js',
+          '<%= DST_DIR %>/js/npc.js': '<%= SRC_DIR %>/js/npc.js',
+          '<%= DST_DIR %>/js/dialogue.js': '<%= SRC_DIR %>/js/dialogue.js',
+          '<%= DST_DIR %>/js/load.js': '<%= SRC_DIR %>/js/load.js',
+          '<%= DST_DIR %>/js/menu.js': '<%= SRC_DIR %>/js/menu.js',
+          '<%= DST_DIR %>/js/town.js': '<%= SRC_DIR %>/js/town.js',
+          '<%= DST_DIR %>/js/myhouse.js': '<%= SRC_DIR %>/js/myhouse.js',
+          '<%= DST_DIR %>/js/myhouse_maybe.js': '<%= SRC_DIR %>/js/myhouse_maybe.js',
+          '<%= DST_DIR %>/js/gramps.js': '<%= SRC_DIR %>/js/gramps.js',
+          '<%= DST_DIR %>/js/well.js': '<%= SRC_DIR %>/js/well.js',
+          '<%= DST_DIR %>/js/darkness.js': '<%= SRC_DIR %>/js/darkness.js',
+          '<%= DST_DIR %>/js/game.js': '<%= SRC_DIR %>/js/game.js'
 
       options:
         banner: '/*! <%= PKG.name %> v<%= PKG.version %> */\n'
@@ -80,9 +93,9 @@ module.exports = (grunt) ->
           stripComments: true
 
         files:
-          '<%= DST_DIR %>/maps/gramps.json':  '<%= SRC_DIR %>/maps/gramps.json'
-          '<%= DST_DIR %>/maps/myhouse.json':  '<%= SRC_DIR %>/maps/myhouse.json'
-          '<%= DST_DIR %>/maps/town.json':  '<%= SRC_DIR %>/maps/town.json'
+          '<%= DST_DIR %>/assets/maps/gramps.json':  '<%= SRC_DIR %>/assets/maps/gramps.json'
+          '<%= DST_DIR %>/assets/maps/myhouse.json':  '<%= SRC_DIR %>/assets/maps/myhouse.json'
+          '<%= DST_DIR %>/assets/maps/town.json':  '<%= SRC_DIR %>/assets/maps/town.json'
 
 
     imagemin:
