@@ -12,9 +12,6 @@ Game.Menu.prototype =  {
         this.instructions = this.game.add.sprite(Game.w/2-100,400,'instructions');
         this.instructions.scale.x = 0.5;
         this.instructions.scale.y = 0.5;
-
-        // Start Message
-        var loadingText = this.game.add.bitmapText(Game.w, Game.h, 'minecraftia', '=click to start=', 30);
     },
     update: function() {
       //Click to Start
