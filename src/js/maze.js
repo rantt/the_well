@@ -206,11 +206,13 @@ Maze.prototype = {
 
   },
   traverse: function(root, nodes) {
-
+    var maxLeafSize = 10;
     if (root.leftChild === null && root.rightChild === null) {
+      if ((root.width > maxLeafSize) || (root.height > maxLeafSize)) { 
        if (root.split()) {
          return this.traverse(root.leftChild, nodes) && this.traverse(root.rightChild, nodes);
        }
+      }
     }
     // root.createRooms();
     nodes.push(root);

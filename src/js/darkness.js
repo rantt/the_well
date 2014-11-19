@@ -14,10 +14,16 @@ Game.Darkness.prototype = {
 
     Game.camera = {x:0, y:0};
 
+  
     //Get Locally Stored vars
     this.scene = parseInt(localStorage.getItem('scene'));
     this.haveRope = JSON.parse(localStorage.getItem('haveRope')); 
-    this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
+
+    if (this.scene < 6) {
+      this.jack = this.game.add.sprite(Game.w/2-32, Game.h/2-32, 'jack');
+      this.jack.frame = 12;
+    }
+  this.haveLamp = JSON.parse(localStorage.getItem('haveLamp')); 
 
     Game.music.stop();
     Game.music = this.game.add.sound('tomb');
@@ -32,7 +38,6 @@ Game.Darkness.prototype = {
     this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2 - 175;
   },
   update: function() {
-    console.log(this.scene);
 
     switch(this.scene) {
       case 4:
@@ -49,7 +54,6 @@ Game.Darkness.prototype = {
         break;
       case 5:
         if (dialogue.hidden) {
-          console.log('showing dia',this.scene);
           dialogue.show(this,['','Not what you expected right?','You died, you know.','You fell, just like me.','There\'s no way out.  Not really.']); 
         }
 
@@ -62,7 +66,6 @@ Game.Darkness.prototype = {
         break;
       case 6:
         if (dialogue.hidden) {
-          console.log('showing dia',this.scene);
           dialogue.show(this,['','Wake up!','Wake up son! Wake up!']); 
         }
 
@@ -76,7 +79,6 @@ Game.Darkness.prototype = {
         break;
       case 7:
         if (dialogue.hidden) {
-          console.log('showing dia',this.scene);
           dialogue.show(this,['','There\'s no way out.','Not really...','THE END.']); 
         }
 

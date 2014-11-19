@@ -204,7 +204,7 @@ Game.Town.prototype = {
       var bp = player.sprite.getBounds();
       if (Phaser.Rectangle.intersects(b1,bp)) {
         console.log(ep.destination);
-        if ((ep.destination !== 'Well') ||  ((ep.destination === 'Well') && (this.haveLamp === true) && (this.haveRope === true))) {
+        if ((ep.destination !== 'Darkness') ||  ((ep.destination === 'Darkness') && (this.haveLamp === true) && (this.haveRope === true))) {
           this.game.state.start(ep.destination);
         }
       }

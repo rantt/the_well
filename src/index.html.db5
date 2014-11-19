@@ -9,7 +9,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<title>Divide By 5 | Gravity Kills</title>
+		<title>Divide By 5 | The Well</title>
 
 		<link rel="stylesheet" href="/css/bootstrap.css">
 		<link rel="stylesheet" href="/css/bootstrap-theme.css">
@@ -75,8 +75,12 @@
 <div class="row">
 	<div class="container">
 		<div align="center">
-			Music - Caustic Chip by Jan125 from <a href='http://opengameart.org/content/caustic-chip'>http://opengameart.org/content/caustic-chip</a><br />
-			Source code available at <a href="https://github.com/rantt/gravity_kills">https://github.com/rantt/gravity_kills</a>
+      Music
+      <ul>
+        <li><a href= 'http://opengameart.org/content/a-theme'>A Theme</a> by edwinnington</li>
+        <li><a href= 'http://opengameart.org/content/forgoten-tomb-ambience'>Forgotten Tomb</a> by kindland</li>
+      </ul>
+			Source code available at <a href="https://github.com/rantt/the_well">https://github.com/rantt/the_well</a>
 		</div>
 	</div>
 </div>

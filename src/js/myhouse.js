@@ -57,13 +57,13 @@ Game.MyHouse.prototype = {
 
     this.lines = {
                    dad: {1: '*Hi, son.*What are you up to?',
-                           2: '*Hi, son.*What are you up to?',
-                           3: '*Might be a lamp in the kitchen.*You should check the drawers.',
-                           4: '*Be careful with that lamp.',
-                           7: '*Welcome back son.*Thought we lost you there.'},
+                         2: '*Hi, son.*What are you up to?',
+                         3: '*Might be a lamp in the kitchen.*You should check the cupboards.',
+                         4: '*Be careful with that lamp.',
+                         7: '*Welcome back son.*Thought we lost you there.'},
                    gramps:  {1: '*Hey kiddo.*What can I do for you.',
-                               2: '*You\'re playing with Jack?*Who\'s Jack?',
-                               7: '*The fall should\'ve killed you.*There was another body down there.*Been there a while,it broke your fall.'},
+                             2: '*You\'re playing with Jack?*Who\'s Jack?',
+                             7: '*The fall should\'ve killed you.*There was another body down there.*Been there a while,it broke your fall.'},
                    mom: {7: '*You\'re okay now honey.'},                     
                    clara: {7: '*Why did you go down there?*Because of your imaginary friend.*He told you to, didn\'t he?'},
                  };

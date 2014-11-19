@@ -20,7 +20,6 @@ Game.Menu.prototype =  {
       //Click to Start
       if (this.game.input.activePointer.isDown){
         this.game.state.start('Town');
-        // this.game.state.start('Well');
         // // Music
         Game.music = this.game.add.sound('music');
         Game.music.volume = 0.5;
